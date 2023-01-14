@@ -87,7 +87,7 @@ public class Login extends Application {
         });
 
         LoginScene = new Scene(logGridPane, 600, 600);
-
+        stage.setResizable(false);
         stage.setScene(LoginScene);
         stage.show();
     }
