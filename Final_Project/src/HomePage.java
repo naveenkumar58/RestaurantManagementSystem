@@ -77,7 +77,7 @@ public class HomePage extends Application {
         });
         
         homePageScene = new Scene(a1,600,600);
-        homePage.setResizable(false);c
+        homePage.setResizable(false);
         homePage.setScene(homePageScene);
         homePage.show();
 
