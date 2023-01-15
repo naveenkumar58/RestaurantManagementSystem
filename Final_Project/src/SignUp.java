@@ -13,6 +13,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
@@ -23,11 +24,14 @@ import javafx.stage.Stage;
 
 public class SignUp extends Application {
 
+
     Scene signUp;
     Stage signUpstage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        ScrollPane scrollPane = new ScrollPane();
 
         signUpstage = primaryStage;
         Label firstName = new Label("Name");
@@ -143,6 +147,7 @@ public class SignUp extends Application {
         // });
 
         signUp = new Scene(signUpPane, 600, 600);
+        // signUp = new Scene(scrollPane, 600, 600);
         signUpstage.setResizable(false);
         signUpstage.setScene(signUp);
         signUpstage.show();

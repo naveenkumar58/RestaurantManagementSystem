@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class HomePage extends Application {
+public class Menu extends Application {
 
 
     Stage homePage;
@@ -43,23 +43,11 @@ public class HomePage extends Application {
         Separator separator = new Separator(Orientation.VERTICAL);
         separator.setMinHeight(600);
 
-        Text label = new Text("RESTO");
+        Text label = new Text("MENU");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
         label.setFill(Color.ORANGERED);
         
-        // HOME IMAGE
-        Image image = new Image("images/restaurant.jpg");
-        //Creating the image view
-        ImageView imageView = new ImageView();
-        //Setting image to the image view
-        imageView.setImage(image);
-        // Setting the image view parameters
-        imageView.setX(10);
-        imageView.setY(10);
-        imageView.setFitWidth(600);
-        imageView.setPreserveRatio(true);
         
-        // HOME BUTTON
         Image home = new Image("images/home.png");
         ImageView homeImage = new ImageView(home);
         homeImage.setFitWidth(50);
@@ -114,12 +102,12 @@ public class HomePage extends Application {
         ImageView imageView2 = new ImageView(image2);
         imageView2.setFitWidth(150);
         imageView2.setPreserveRatio(true);
-        Button logOutButton = new Button();
-        logOutButton.setGraphic(imageView2);
-        logOutButton.setStyle("-fx-background-color: transparent;");
-        logOutButton.setCursor(Cursor.HAND);
+        Button logoutButton = new Button();
+        logoutButton.setGraphic(imageView2);
+        logoutButton.setStyle("-fx-background-color: transparent;");
+        logoutButton.setCursor(Cursor.HAND);
 
-        AnchorPane a1 = new AnchorPane(separator,homeButton,menuButton,cartButton,logOutButton,tableResButton,label,imageView);
+        AnchorPane a1 = new AnchorPane(separator,homeButton,menuButton,cartButton,logoutButton,tableResButton,label);
 
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
@@ -136,8 +124,8 @@ public class HomePage extends Application {
         // AnchorPane.setRightAnchor(cartButton, 630.0);
         AnchorPane.setTopAnchor(cartButton, 130.0);
 
-        AnchorPane.setLeftAnchor(logOutButton, 30.0);
-        AnchorPane.setBottomAnchor(logOutButton, 5.0);
+        AnchorPane.setLeftAnchor(logoutButton, 30.0);
+        AnchorPane.setBottomAnchor(logoutButton, 5.0);
 
 
         AnchorPane.setLeftAnchor(tableResButton, 0.0);
@@ -145,17 +133,12 @@ public class HomePage extends Application {
         AnchorPane.setTopAnchor(tableResButton, 200.0);
         // AnchorPane.setBottomAnchor(tableResButton, 30.0);
 
-        AnchorPane.setLeftAnchor(imageView, 200.0);
-        AnchorPane.setRightAnchor(imageView, 480.0);
-        AnchorPane.setTopAnchor(imageView, 100.0);
-        AnchorPane.setBottomAnchor(imageView, 400.0);
-
         
         AnchorPane.setLeftAnchor(label, 430.0);
         AnchorPane.setTopAnchor(label, 20.0);
         AnchorPane.setBottomAnchor(label, 400.0);
 
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+        logoutButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -171,25 +154,6 @@ public class HomePage extends Application {
             }
             
         });
-
-        homeButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                HomePage home = new HomePage();
-
-                try {
-                    home.start(homePage);
-                } catch (Exception e) {
-                    
-                    e.printStackTrace();
-                }
-                
-            }
-            
-        });
-
-        
 
         menuButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -216,6 +180,24 @@ public class HomePage extends Application {
 
                 try {
                     cart.start(homePage);
+                } catch (Exception e) {
+                    
+                    e.printStackTrace();
+                }
+                
+            }
+            
+        });
+
+        
+        homeButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                HomePage home = new HomePage();
+
+                try {
+                    home.start(homePage);
                 } catch (Exception e) {
                     
                     e.printStackTrace();

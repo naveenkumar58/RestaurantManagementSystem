@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class Login extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        launch( args);
     }
 
     Scene LoginScene;
@@ -25,7 +25,7 @@ public class Login extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
 
-        Text headingText = new Text("Sign In Form");
+        new Text("Sign In Form");
 
         Label emaiLabel = new Label("Email Address");
         TextField emailField = new TextField();
