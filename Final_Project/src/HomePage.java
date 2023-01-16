@@ -118,8 +118,11 @@ public class HomePage extends Application {
         logOutButton.setGraphic(imageView2);
         logOutButton.setStyle("-fx-background-color: transparent;");
         logOutButton.setCursor(Cursor.HAND);
+        AnchorPane leftPane = new AnchorPane();
+        AnchorPane a1 = new AnchorPane(leftPane,separator,homeButton,menuButton,cartButton,logOutButton,tableResButton,label,imageView);
 
-        AnchorPane a1 = new AnchorPane(separator,homeButton,menuButton,cartButton,logOutButton,tableResButton,label,imageView);
+        AnchorPane.setLeftAnchor(leftPane, 200.0);
+        AnchorPane.setRightAnchor(leftPane, 600.0);
 
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
