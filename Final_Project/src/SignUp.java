@@ -3,10 +3,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -24,7 +26,6 @@ import javafx.stage.Stage;
 
 public class SignUp extends Application {
 
-
     Scene signUp;
     Stage signUpstage;
 
@@ -34,17 +35,17 @@ public class SignUp extends Application {
         ScrollPane scrollPane = new ScrollPane();
 
         signUpstage = primaryStage;
-        Label firstName = new Label("Name");
+        Label firstName = new Label("Username");
         TextField firstnameField = new TextField();
-
-        Label lastName = new Label("Last Name");
-        TextField lastNameField = new TextField();
 
         Label emailLabel = new Label("Email Address");
         TextField emailField = new TextField();
 
         Label passLabel = new Label("Password");
         PasswordField passwordField = new PasswordField();
+
+        Label confirmPassLabel = new Label("Confirm Password");
+        PasswordField confirmPassField = new PasswordField();
 
         Label gender = new Label("Gender");
         ToggleGroup rbToggle = new ToggleGroup();
@@ -57,7 +58,51 @@ public class SignUp extends Application {
         DatePicker dobDatePicker = new DatePicker();
 
         Button signUpButton = new Button("Sign Up");
+        signUpButton.setCursor(Cursor.HAND);
+
         Button cancelButton = new Button("Cancel");
+        cancelButton.setCursor(Cursor.HAND);
+
+        CheckBox showPass = new CheckBox("Show Password");
+        CheckBox showConfirmPass = new CheckBox("Show Password");
+        TextField passText = new TextField();
+        TextField confirmPassText = new TextField();
+
+        showPass.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (showPass.isSelected()) {
+                    passText.setText(passwordField.getText());
+                    passText.setVisible(true);
+                    passwordField.setVisible(false);
+                    return;
+                } else {
+                    passwordField.setText(passText.getText());
+                    passwordField.setVisible(true);
+                    passText.setVisible(false);
+                }
+
+            }
+        });
+
+        showConfirmPass.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (showConfirmPass.isSelected()) {
+                    confirmPassText.setText(confirmPassField.getText());
+                    confirmPassText.setVisible(true);
+                    confirmPassField.setVisible(false);
+                    return;
+                } else {
+                    confirmPassField.setText(confirmPassText.getText());
+                    confirmPassField.setVisible(true);
+                    confirmPassText.setVisible(false);
+                }
+
+            }
+        });
 
         GridPane signUpPane = new GridPane();
         signUpPane.setAlignment(Pos.CENTER);
@@ -65,20 +110,24 @@ public class SignUp extends Application {
         signUpPane.setVgap(10);
         signUpPane.add(firstName, 1, 1);
         signUpPane.add(firstnameField, 1, 2);
-        signUpPane.add(lastName, 2, 1);
-        signUpPane.add(lastNameField, 2, 2);
-        signUpPane.add(emailLabel, 1, 3);
-        signUpPane.add(emailField, 1, 4);
-        signUpPane.add(dobLabel, 2, 3);
-        signUpPane.add(dobDatePicker, 2, 4);
-        signUpPane.add(gender, 1, 5);
-        signUpPane.add(maleRadioButton, 1, 6);
-        signUpPane.add(femaleRadioButton, 1, 6);
+        signUpPane.add(emailLabel, 2, 1);
+        signUpPane.add(emailField, 2, 2);
+        signUpPane.add(dobLabel, 1, 3);
+        signUpPane.add(dobDatePicker, 1, 4);
+        signUpPane.add(gender, 2, 3);
+        signUpPane.add(maleRadioButton, 2, 4);
+        signUpPane.add(femaleRadioButton, 2, 4);
         signUpPane.setMargin(femaleRadioButton, new Insets(0, 0, 0, 80));
-        signUpPane.add(passLabel, 2, 5);
-        signUpPane.add(passwordField, 2, 6);
-        signUpPane.add(signUpButton, 2, 7);
-        signUpPane.add(cancelButton, 2, 7);
+        signUpPane.add(passLabel, 1, 5);
+        signUpPane.add(passText, 1, 6);
+        signUpPane.add(passwordField, 1, 6);
+        signUpPane.add(showPass, 1, 7);
+        signUpPane.add(confirmPassLabel, 2, 5);
+        signUpPane.add(confirmPassText, 2, 6);
+        signUpPane.add(confirmPassField, 2, 6);
+        signUpPane.add(showConfirmPass, 2, 7);
+        signUpPane.add(signUpButton, 2, 8);
+        signUpPane.add(cancelButton, 2, 8);
         signUpPane.setMargin(cancelButton, new Insets(0, 0, 0, 80));
 
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -109,45 +158,12 @@ public class SignUp extends Application {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
 
-        // signUpButton.setOnAction(new EventHandler<ActionEvent>() {
-
-        //     @Override
-        //     public void handle(ActionEvent event) {
-               
-        //         Dialog<ButtonType> dialog = new Dialog<>();
-        //         dialog.initModality(Modality.APPLICATION_MODAL);
-        //         dialog.setTitle("Sign Up Successful");
-        //         Button signInButton = new Button("Sign In");
-        //         dialog.getDialogPane().setContent(signInButton);
-        //         dialog.showAndWait();
-
-        //         signInButton.setOnAction(new EventHandler<ActionEvent>() {
-
-        //             @Override
-        //             public void handle(ActionEvent event) {
-        //                 Login login = new Login();
-        //                 dialog.close();
-
-        //                 try {
-        //                     login.start(signUpstage);
-        //                 } catch (Exception e) {
-        //                     e.printStackTrace();
-        //                 }
-
-        //             }
-
-        //         });
-        //     }
-
-        // });
-
         signUp = new Scene(signUpPane, 800, 600);
-        // signUp = new Scene(scrollPane, 600, 600);
         signUpstage.setResizable(false);
         signUpstage.setScene(signUp);
         signUpstage.show();

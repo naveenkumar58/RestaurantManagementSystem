@@ -116,11 +116,11 @@ public class Cart extends Application {
         clearAllBut.setOnMouseEntered(e -> clearAllBut.setEffect(new DropShadow()));
         clearAllBut.setOnMouseExited(e -> clearAllBut.setEffect(null));
 
-        VBox root = new VBox();
-        root.setPadding(new Insets(10));
-        root.setSpacing(10);
-        root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(clearAllBut);
+        // VBox root = new VBox();
+        // root.setPadding(new Insets(10));
+        // root.setSpacing(10);
+        // root.setAlignment(Pos.CENTER);
+        // root.getChildren().addAll(clearAllBut);
 
         // CLEAR BUTTON
         Button clearBut = new Button("Clear");
@@ -131,11 +131,11 @@ public class Cart extends Application {
         clearBut.setOnMouseEntered(e -> clearBut.setEffect(new DropShadow()));
         clearBut.setOnMouseExited(e -> clearBut.setEffect(null));
 
-        VBox root2 = new VBox();
-        root2.setPadding(new Insets(10));
-        root2.setSpacing(10);
-        root2.setAlignment(Pos.CENTER);
-        root2.getChildren().addAll(clearBut, cartLabel);
+        // VBox root2 = new VBox();
+        // root2.setPadding(new Insets(10));
+        // root2.setSpacing(10);
+        // root2.setAlignment(Pos.CENTER);
+        // root2.getChildren().addAll(clearBut, cartLabel);
 
         // PLACE ORDER BUTTON
         Button placeOrderButton = new Button("Place Order");
