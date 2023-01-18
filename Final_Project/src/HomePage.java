@@ -32,129 +32,142 @@ import javafx.stage.Stage;
 
 public class HomePage extends Application {
 
-
     Stage homePage;
     Scene homePageScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         homePage = primaryStage;
-        
+
         Separator separator = new Separator(Orientation.VERTICAL);
         separator.setMinHeight(600);
 
         Text label = new Text("RESTO");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
         label.setFill(Color.ORANGERED);
-        
+
         // HOME IMAGE
         Image image = new Image("images/restaurant.jpg");
-        //Creating the image view
+        // Creating the image view
         ImageView imageView = new ImageView();
-        //Setting image to the image view
+        // Setting image to the image view
         imageView.setImage(image);
         // Setting the image view parameters
         imageView.setX(10);
         imageView.setY(10);
         imageView.setFitWidth(600);
         imageView.setPreserveRatio(true);
-        
+
         // HOME BUTTON
         Image home = new Image("images/home.png");
         ImageView homeImage = new ImageView(home);
-        homeImage.setFitWidth(50);
+        homeImage.setFitWidth(25);
         homeImage.setPreserveRatio(true);
         Button homeButton = new Button();
-        homeButton.setText("Home");
-        homeButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        homeButton.setText("HOME");
+        homeButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
         homeButton.setGraphic(homeImage);
         homeButton.setStyle("-fx-background-color: transparent;");
+        homeButton.setTextFill(Color.WHITE);
         homeButton.setCursor(Cursor.HAND);
-        
 
-        // Menu Button 
+        // Menu Button
         Image menuViewImage = new Image("images/menu.png");
         ImageView menuImage = new ImageView(menuViewImage);
-        menuImage.setFitWidth(40);
+        menuImage.setFitWidth(25);
         menuImage.setPreserveRatio(true);
         Button menuButton = new Button();
         menuButton.setGraphic(menuImage);
         menuButton.setStyle("-fx-background-color: transparent;");
-        menuButton.setText("Menu");
-        menuButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        menuButton.setText("MENU");
+        menuButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        menuButton.setTextFill(Color.WHITE);
         menuButton.setCursor(Cursor.HAND);
 
         // Cart button
         Image cartViewImage = new Image("images/cart.png");
         ImageView cartImage = new ImageView(cartViewImage);
-        cartImage.setFitWidth(50);
+        cartImage.setFitWidth(25);
         cartImage.setPreserveRatio(true);
         Button cartButton = new Button();
         cartButton.setGraphic(cartImage);
-        cartButton.setText("Cart");
-        cartButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        cartButton.setText(" CART");
+        cartButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
         cartButton.setStyle("-fx-background-color: transparent;");
+        cartButton.setTextFill(Color.WHITE);
         cartButton.setCursor(Cursor.HAND);
-        
+        cartButton.setCursor(Cursor.HAND);
+
         // TABLE RESERVATION
         Image tabkeViewImage = new Image("images/table.png");
         ImageView tableView = new ImageView(tabkeViewImage);
-        tableView.setFitWidth(50);
+        tableView.setFitWidth(40);
         tableView.setPreserveRatio(true);
         Button tableResButton = new Button();
         tableResButton.setGraphic(tableView);
-        tableResButton.setText("Table\nReservation");
-        tableResButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+        tableResButton.setText("TABLE\nRESERVATION");
+        tableResButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 13));
         tableResButton.setStyle("-fx-background-color: transparent;");
         tableResButton.setCursor(Cursor.HAND);
+        tableResButton.setTextFill(Color.WHITE);
         tableResButton.setTextAlignment(TextAlignment.CENTER);
 
         // LOGOUT BUTTON
         Image image2 = new Image("images/logout.png");
         ImageView imageView2 = new ImageView(image2);
-        imageView2.setFitWidth(150);
+        imageView2.setFitWidth(25);
         imageView2.setPreserveRatio(true);
         Button logOutButton = new Button();
+        logOutButton.setText(" LOGOUT");
         logOutButton.setGraphic(imageView2);
+        logOutButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
         logOutButton.setStyle("-fx-background-color: transparent;");
+        logOutButton.setTextFill(Color.WHITE);
         logOutButton.setCursor(Cursor.HAND);
-        AnchorPane leftPane = new AnchorPane();
-        AnchorPane a1 = new AnchorPane(leftPane,separator,homeButton,menuButton,cartButton,logOutButton,tableResButton,label,imageView);
+        AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
+                tableResButton);
+        leftPane.setStyle("-fx-background-color: #FF6347;");
+        AnchorPane rightPane = new AnchorPane(label, imageView);
+        AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
 
-        AnchorPane.setLeftAnchor(leftPane, 200.0);
+        AnchorPane.setLeftAnchor(leftPane, 0.0);
         AnchorPane.setRightAnchor(leftPane, 600.0);
+        AnchorPane.setBottomAnchor(leftPane, 0.0);
+
+        AnchorPane.setLeftAnchor(rightPane, 200.0);
+        AnchorPane.setRightAnchor(rightPane, 0.0);
 
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
 
         AnchorPane.setTopAnchor(homeButton, 20.0);
-        AnchorPane.setLeftAnchor(homeButton, 0.0);
-        AnchorPane.setRightAnchor(homeButton, 630.0);
+        AnchorPane.setLeftAnchor(homeButton, 10.0);
+        AnchorPane.setRightAnchor(homeButton, 30.0);
 
-        AnchorPane.setLeftAnchor(menuButton, 0.0);
-        AnchorPane.setRightAnchor(menuButton, 630.0);
+        AnchorPane.setLeftAnchor(menuButton, 10.0);
+        AnchorPane.setRightAnchor(menuButton, 30.0);
         AnchorPane.setTopAnchor(menuButton, 80.0);
 
-        AnchorPane.setLeftAnchor(cartButton, 15.0);
-        // AnchorPane.setRightAnchor(cartButton, 630.0);
+        AnchorPane.setLeftAnchor(cartButton, 10.0);
+        AnchorPane.setRightAnchor(cartButton, 30.0);
         AnchorPane.setTopAnchor(cartButton, 130.0);
 
-        AnchorPane.setLeftAnchor(logOutButton, 30.0);
-        AnchorPane.setBottomAnchor(logOutButton, 5.0);
+        AnchorPane.setLeftAnchor(logOutButton, 10.0);
+        AnchorPane.setBottomAnchor(logOutButton, 35.0);
+        AnchorPane.setRightAnchor(logOutButton, 30.0);
+        AnchorPane.setTopAnchor(logOutButton, 540.0);
 
-
-        AnchorPane.setLeftAnchor(tableResButton, 0.0);
-        AnchorPane.setRightAnchor(tableResButton, 630.0);
+        AnchorPane.setLeftAnchor(tableResButton, 10.0);
+        AnchorPane.setRightAnchor(tableResButton, 30.0);
         AnchorPane.setTopAnchor(tableResButton, 200.0);
         // AnchorPane.setBottomAnchor(tableResButton, 30.0);
 
-        AnchorPane.setLeftAnchor(imageView, 200.0);
-        AnchorPane.setRightAnchor(imageView, 480.0);
+        AnchorPane.setLeftAnchor(imageView, 0.0);
+        AnchorPane.setRightAnchor(imageView, 0.0);
         AnchorPane.setTopAnchor(imageView, 100.0);
         AnchorPane.setBottomAnchor(imageView, 400.0);
 
-        
-        AnchorPane.setLeftAnchor(label, 430.0);
+        AnchorPane.setLeftAnchor(label, 250.0);
         AnchorPane.setTopAnchor(label, 20.0);
         AnchorPane.setBottomAnchor(label, 400.0);
 
@@ -167,12 +180,12 @@ public class HomePage extends Application {
                 try {
                     login.start(homePage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
 
         homeButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -184,15 +197,13 @@ public class HomePage extends Application {
                 try {
                     home.start(homePage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
-            }
-            
-        });
 
-        
+            }
+
+        });
 
         menuButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -203,12 +214,12 @@ public class HomePage extends Application {
                 try {
                     menu.start(homePage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
 
         cartButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -220,15 +231,16 @@ public class HomePage extends Application {
                 try {
                     cart.start(homePage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
         // naveen learning branch created
-        homePageScene = new Scene(a1,800,700);
+        homePageScene = new Scene(a1, 800, 600);
+        homePage.setTitle("Home Page");
         homePage.setResizable(false);
         homePage.setScene(homePageScene);
         homePage.show();
