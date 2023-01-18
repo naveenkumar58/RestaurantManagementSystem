@@ -207,7 +207,7 @@ public class Menu extends Application {
             
         });
         // naveen learning branch created
-        homePageScene = new Scene(a1,800,700);
+        homePageScene = new Scene(a1,800,600);
         homePage.setResizable(false);
         homePage.setScene(homePageScene);
         homePage.show();

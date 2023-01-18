@@ -8,9 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.PopupWindow.AnchorLocation;
 
 public class Login extends Application {
 
@@ -38,7 +41,11 @@ public class Login extends Application {
         passwordField.setMinWidth(200);
 
         Button LoginButton = new Button("Login");
-        Button signButton = new Button("Create An Account");
+        Button signUpButton = new Button("Sign Up");
+        signUpButton.setStyle("-fx-background-color: transparent;");
+
+
+        Label askSignup = new Label("Don't have an account?");
 
         GridPane logGridPane = new GridPane();
         logGridPane.setAlignment(Pos.CENTER);
@@ -47,14 +54,41 @@ public class Login extends Application {
         logGridPane.setVgap(10);
         logGridPane.setPadding(new Insets(25, 25, 25, 25));
         logGridPane.add(emaiLabel, 1, 1);
-        logGridPane.add(emailField, 1, 2);
-        logGridPane.add(passLabel, 2, 1);
+        logGridPane.add(emailField, 2, 1);
+        logGridPane.add(passLabel, 1, 2);
         logGridPane.add(passwordField, 2, 2);
-        logGridPane.add(LoginButton, 2, 3);
-        logGridPane.add(signButton, 2, 3);
-        logGridPane.setMargin(signButton, new Insets(0, 0, 0, 100));
+        // logGridPane.add(LoginButton, 2, 3);
+        // logGridPane.add(signButton, 2, 3);
+        // logGridPane.setMargin(signButton, new Insets(0, 0, 0, 100));
 
-        signButton.setOnAction(new EventHandler<ActionEvent>() {
+        AnchorPane loginAnchorPane = new AnchorPane(logGridPane,LoginButton,askSignup,signUpButton);
+        // StackPane loginStackPane = new StackPane(logGridPane,loginAnchorPane);
+
+        AnchorPane.setLeftAnchor(loginAnchorPane,0.0 );
+        AnchorPane.setRightAnchor(loginAnchorPane, 0.0);
+        AnchorPane.setTopAnchor(loginAnchorPane, 0.0);
+        AnchorPane.setBottomAnchor(loginAnchorPane, 0.0);
+
+        AnchorPane.setLeftAnchor(logGridPane,0.0 );
+        AnchorPane.setRightAnchor(logGridPane, 0.0);
+        AnchorPane.setTopAnchor(logGridPane, 0.0);
+        AnchorPane.setBottomAnchor(logGridPane, 0.0);
+
+        AnchorPane.setLeftAnchor(LoginButton,370.0 );
+        AnchorPane.setRightAnchor(LoginButton, 300.0);
+        AnchorPane.setTopAnchor(LoginButton, 370.0);
+        AnchorPane.setBottomAnchor(LoginButton, 200.0);
+
+        AnchorPane.setLeftAnchor(askSignup,370.0 );
+        AnchorPane.setTopAnchor(askSignup, 450.0);
+
+        AnchorPane.setLeftAnchor(signUpButton,495.0);
+        AnchorPane.setRightAnchor(signUpButton, 245.0);
+        AnchorPane.setTopAnchor(signUpButton, 445.0);
+        AnchorPane.setBottomAnchor(signUpButton, 126.0);
+
+
+        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -86,7 +120,7 @@ public class Login extends Application {
             
         });
 
-        LoginScene = new Scene(logGridPane, 600, 600);
+        LoginScene = new Scene(loginAnchorPane, 800, 600);
         stage.setResizable(false);
         stage.setScene(LoginScene);
         stage.show();

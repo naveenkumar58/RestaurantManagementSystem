@@ -146,7 +146,7 @@ public class SignUp extends Application {
 
         // });
 
-        signUp = new Scene(signUpPane, 600, 600);
+        signUp = new Scene(signUpPane, 800, 600);
         // signUp = new Scene(scrollPane, 600, 600);
         signUpstage.setResizable(false);
         signUpstage.setScene(signUp);

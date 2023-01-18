@@ -61,18 +61,37 @@ public class AdminPannel  extends Application {
         AnchorPane.setBottomAnchor(menu_items, 0.0);
         AnchorPane.setTopAnchor(menu_items, 100.0);
 
-        AnchorPane.setLeftAnchor(p_name, 520.0);
+        AnchorPane.setLeftAnchor(p_name, 540.0);
         AnchorPane.setTopAnchor(p_name, 100.0);
 
-        AnchorPane.setLeftAnchor(p_text, 520.0);
-        AnchorPane.setRightAnchor(p_text, 120.0);
+        AnchorPane.setLeftAnchor(p_text, 540.0);
+        AnchorPane.setRightAnchor(p_text, 80.0);
         // AnchorPane.setBottomAnchor(p_text, 0.0);
         AnchorPane.setTopAnchor(p_text, 120.0);
 
-        AnchorPane.setLeftAnchor(menu_items, 200.0);
-        AnchorPane.setRightAnchor(menu_items, 300.0);
-        AnchorPane.setBottomAnchor(menu_items, 0.0);
-        AnchorPane.setTopAnchor(menu_items, 100.0);        
+        AnchorPane.setLeftAnchor(p_price, 540.0);
+        AnchorPane.setTopAnchor(p_price, 160.0);
+
+        AnchorPane.setLeftAnchor(price_text, 540.0);
+        AnchorPane.setRightAnchor(price_text, 80.0);
+        // AnchorPane.setBottomAnchor(menu_items, 0.0);
+        AnchorPane.setTopAnchor(price_text, 180.0);
+
+        AnchorPane.setLeftAnchor(add_btn, 540.0);
+        AnchorPane.setRightAnchor(add_btn, 80.0);
+        AnchorPane.setBottomAnchor(add_btn, 300.0);
+        AnchorPane.setTopAnchor(add_btn, 250.0);
+
+        AnchorPane.setLeftAnchor(update_btn, 540.0);
+        AnchorPane.setRightAnchor(update_btn, 180.0);
+        AnchorPane.setBottomAnchor(update_btn, 230.0);
+        AnchorPane.setTopAnchor(update_btn, 320.0);
+
+        AnchorPane.setLeftAnchor(dlt_btn, 640.0);
+        AnchorPane.setRightAnchor(dlt_btn, 80.0);
+        AnchorPane.setBottomAnchor(dlt_btn, 230.0);
+        AnchorPane.setTopAnchor(dlt_btn, 320.0);
+
 
 
 

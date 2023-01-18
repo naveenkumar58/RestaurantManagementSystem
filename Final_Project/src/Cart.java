@@ -177,7 +177,7 @@ public class Cart extends Application {
         // cartTable.getColumns().addAll(itemNameColumn,costColumn,quantityColumn,addColumn,substractColumn);
 
         // GridPane homeGrid = new GridPane();
-        ScrollPane scroll = new ScrollPane();
+        // ScrollPane scroll = new ScrollPane();
         // Pane sidePane = new Pane();
         // sidePane.setPrefSize(200, 600);
         AnchorPane leftPane = new AnchorPane(separator, menuButton, cartButton, homeButton, logOutButton,
@@ -197,6 +197,8 @@ public class Cart extends Application {
 
         AnchorPane.setLeftAnchor(rightPane, 200.0);
         AnchorPane.setRightAnchor(rightPane, 0.0);
+        AnchorPane.setBottomAnchor(rightPane, 0.0);
+        AnchorPane.setTopAnchor(rightPane, 0.0);
 
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
@@ -223,33 +225,33 @@ public class Cart extends Application {
         AnchorPane.setTopAnchor(tableResButton, 200.0);
         // AnchorPane.setBottomAnchor(tableResButton, 30.0);
 
-       AnchorPane.setLeftAnchor(cartTable, 50.0);
-       AnchorPane.setRightAnchor(cartTable, 0.0);
-       AnchorPane.setTopAnchor(cartTable, 80.0);
-       AnchorPane.setBottomAnchor(cartTable, 50.0);
-        
-        AnchorPane.setLeftAnchor(clearAllBut, 220.0);
-        // AnchorPane.setRightAnchor(clearAllBut, 500.0);
+        AnchorPane.setLeftAnchor(cartTable, 0.0);
+        AnchorPane.setRightAnchor(cartTable, 0.0);
+        AnchorPane.setTopAnchor(cartTable, 80.0);
+        AnchorPane.setBottomAnchor(cartTable, 150.0);
+
+        AnchorPane.setLeftAnchor(clearAllBut, 140.0);
+        AnchorPane.setRightAnchor(clearAllBut, 360.0);
         AnchorPane.setTopAnchor(clearAllBut, 460.0);
-        // AnchorPane.setBottomAnchor(clearAllBut, 110.0);
+        AnchorPane.setBottomAnchor(clearAllBut, 110.0);
 
         AnchorPane.setLeftAnchor(clearBut, 20.0);
         AnchorPane.setRightAnchor(clearBut, 480.0);
-        AnchorPane.setTopAnchor(clearBut, 500.0);
-        AnchorPane.setBottomAnchor(clearBut, 200.0);
+        AnchorPane.setTopAnchor(clearBut, 460.0);
+        AnchorPane.setBottomAnchor(clearBut, 110.0);
 
-        AnchorPane.setLeftAnchor(cartLabel, 450.0);
-        AnchorPane.setRightAnchor(cartLabel, 400.0);
+        AnchorPane.setLeftAnchor(cartLabel, 230.0);
+        // AnchorPane.setRightAnchor(cartLabel, 400.0);
         AnchorPane.setTopAnchor(cartLabel, 20.0);
         AnchorPane.setBottomAnchor(cartLabel, 110.0);
 
-        AnchorPane.setLeftAnchor(placeOrderButton, 600.0);
+        AnchorPane.setLeftAnchor(placeOrderButton, 460.0);
         AnchorPane.setRightAnchor(placeOrderButton, 30.0);
         AnchorPane.setTopAnchor(placeOrderButton, 460.0);
-        // AnchorPane.setBottomAnchor(placeOrderButton, 110.0);
+        AnchorPane.setBottomAnchor(placeOrderButton, 110.0);
 
-        AnchorPane.setLeftAnchor(paymentLabel, 610.0);
-        // AnchorPane.setRightAnchor(paymentLabel, 30.0);
+        AnchorPane.setLeftAnchor(paymentLabel, 380.0);
+        // AnchorPane.setRightAnchor(paymentLabel, 50.0);
         AnchorPane.setTopAnchor(paymentLabel, 500.0);
         AnchorPane.setBottomAnchor(paymentLabel, 70.0);
 
