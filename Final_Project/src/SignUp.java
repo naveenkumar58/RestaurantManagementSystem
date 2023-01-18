@@ -28,6 +28,28 @@ public class SignUp extends Application {
 
     Scene signUp;
     Stage signUpstage;
+    Login loginObj = new Login();
+    User userData;
+    TextField firstnameField, emailField;
+    RadioButton maleRadioButton, femaleRadioButton;
+    DatePicker dobDatePicker;
+    PasswordField passwordField,confirmPassField;
+
+    // public User getUserDetails() {
+	// 	userData.setLastName(firstnameField.getText());
+	// 	if (maleRadioButton.isSelected()) {
+	// 		userData.setGender("Male");
+	// 	} else if (femaleRadioButton.isSelected()) {
+	// 		userData.setGender("Female");
+	// 	}
+	// 	userData.setDate(cmb_date.getValue().toString());
+	// 	userData.setMonth(cmb_month.getValue().toString());
+	// 	userData.setYear(cmb_year.getValue().toString());
+	// 	userData.setEmail(emailField.getText());
+	// 	userData.setPassword(passwordField.getText());
+	// 	userData.setConfirmPassword(confirmPassField.getText());
+	// 	return userData;
+	// }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,26 +58,26 @@ public class SignUp extends Application {
 
         signUpstage = primaryStage;
         Label firstName = new Label("Username");
-        TextField firstnameField = new TextField();
+        firstnameField = new TextField();
 
         Label emailLabel = new Label("Email Address");
-        TextField emailField = new TextField();
+        emailField = new TextField();
 
         Label passLabel = new Label("Password");
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
 
         Label confirmPassLabel = new Label("Confirm Password");
-        PasswordField confirmPassField = new PasswordField();
+        confirmPassField = new PasswordField();
 
         Label gender = new Label("Gender");
         ToggleGroup rbToggle = new ToggleGroup();
-        RadioButton maleRadioButton = new RadioButton("Male");
-        RadioButton femaleRadioButton = new RadioButton("Female");
+        maleRadioButton = new RadioButton("Male");
+        femaleRadioButton = new RadioButton("Female");
         maleRadioButton.setToggleGroup(rbToggle);
         femaleRadioButton.setToggleGroup(rbToggle);
 
         Label dobLabel = new Label("Date Of Birth");
-        DatePicker dobDatePicker = new DatePicker();
+        dobDatePicker = new DatePicker();
 
         Button signUpButton = new Button("Sign Up");
         signUpButton.setCursor(Cursor.HAND);
