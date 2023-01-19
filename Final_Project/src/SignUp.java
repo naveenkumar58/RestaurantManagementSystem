@@ -35,21 +35,22 @@ public class SignUp extends Application {
     DatePicker dobDatePicker;
     PasswordField passwordField,confirmPassField;
 
-    // public User getUserDetails() {
-	// 	userData.setLastName(firstnameField.getText());
-	// 	if (maleRadioButton.isSelected()) {
-	// 		userData.setGender("Male");
-	// 	} else if (femaleRadioButton.isSelected()) {
-	// 		userData.setGender("Female");
-	// 	}
-	// 	userData.setDate(cmb_date.getValue().toString());
-	// 	userData.setMonth(cmb_month.getValue().toString());
-	// 	userData.setYear(cmb_year.getValue().toString());
-	// 	userData.setEmail(emailField.getText());
-	// 	userData.setPassword(passwordField.getText());
-	// 	userData.setConfirmPassword(confirmPassField.getText());
-	// 	return userData;
-	// }
+    public User getUserDetails() {
+		userData.setLastName(firstnameField.getText());
+		if (maleRadioButton.isSelected()) {
+			userData.setGender("Male");
+		} else if (femaleRadioButton.isSelected()) {
+			userData.setGender("Female");
+		}
+		// userData.setDate(dobDatePicker.getdate);
+		// userData.setMonth(cmb_month.getValue().toString());
+		// userData.setYear(cmb_year.getValue().toString());
+        userData.setdob(dobDatePicker.getValue().toString());
+		userData.setEmail(emailField.getText());
+		userData.setPassword(passwordField.getText());
+		userData.setConfirmPassword(confirmPassField.getText());
+		return userData;
+	}
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -167,23 +168,33 @@ public class SignUp extends Application {
             }
 
         });
-
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                HomePage homePage = new HomePage();
+			@Override
+			public void handle(ActionEvent event) {
+//				Filing fileWrite = new Filing();
+//				System.out.println(fileWrite.readData("signup.txt"));
+//				fileWrite.writeData(getUserDetails(), "signup.txt");
+				Authentication auth = new Authentication();
+				auth.signUp(getUserDetails());
+			}
+		});
+        // signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
-                try {
-                    homePage.start(signUpstage);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        //     @Override
+        //     public void handle(ActionEvent event) {
+        //         HomePage homePage = new HomePage();
 
-            }
+        //         try {
+        //             homePage.start(signUpstage);
+        //         } catch (Exception e) {
+        //             // TODO Auto-generated catch block
+        //             e.printStackTrace();
+        //         }
 
-        });
+        //     }
+
+        // });
 
         signUp = new Scene(signUpPane, 800, 600);
         signUpstage.setResizable(false);

@@ -64,14 +64,14 @@ public class Login extends Application {
 
         Button LoginButton = new Button("Login");
         LoginButton.setCursor(Cursor.HAND);
-        // LoginButton.setOnAction(new EventHandler<ActionEvent>() {
+        LoginButton.setOnAction(new EventHandler<ActionEvent>() {
 
-        //     @Override
-        //     public void handle(ActionEvent event) {
-        //         Authentication auth = new Authentication();
-        //         auth.signIn(emailField.getText(), passwordField.getText());
-        //     }
-        // });
+            @Override
+            public void handle(ActionEvent event) {
+                Authentication auth = new Authentication();
+                auth.signIn(emailField.getText(), passwordField.getText());
+            }
+        });
 
         Button signUpButton = new Button("Sign Up");
         signUpButton.setCursor(Cursor.HAND);

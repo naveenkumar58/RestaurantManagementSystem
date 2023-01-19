@@ -1,6 +1,6 @@
 
 public class User {
-	String firstName, lastName, gender, DOB, date, month, year, email, password, rePassword;
+	String firstName, lastName, gender, DOB, email, password, rePassword;
 
 	public void setFirstName(String param) {
 		this.firstName = param;
@@ -26,20 +26,24 @@ public class User {
 		return this.gender;
 	}
 
-	public void setDate(String param) {
-		this.date = param;
-	}
+	// public void setDate(String param) {
+	// 	this.date = param;
+	// }
 
-	public void setMonth(String param) {
-		this.month = param;
-	}
+	// public void setMonth(String param) {
+	// 	this.month = param;
+	// }
 
-	public void setYear(String param) {
-		this.year = param;
+	// public void setYear(String param) {
+	// 	this.year = param;
+	// }
+
+	public void setdob(String dob){
+		this.DOB = dob;
 	}
 
 	private String getDOB() {
-		return this.date + "-" + this.month + "-" + this.year;
+		return this.DOB;
 	}
 
 	public void setEmail(String param) {
