@@ -1,0 +1,3 @@
+naveen,Male,2023-01-02,naveen@,123
+ahmed,Male,2023-01-02,ahmed@,123
+naveen,Male,2023-01-03,naveen,987

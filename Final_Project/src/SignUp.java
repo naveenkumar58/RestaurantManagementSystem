@@ -33,28 +33,25 @@ public class SignUp extends Application {
     TextField firstnameField, emailField;
     RadioButton maleRadioButton, femaleRadioButton;
     DatePicker dobDatePicker;
-    PasswordField passwordField,confirmPassField;
+    PasswordField passwordField, confirmPassField;
 
     public User getUserDetails() {
-		userData.setLastName(firstnameField.getText());
-		if (maleRadioButton.isSelected()) {
-			userData.setGender("Male");
-		} else if (femaleRadioButton.isSelected()) {
-			userData.setGender("Female");
-		}
-		// userData.setDate(dobDatePicker.getdate);
-		// userData.setMonth(cmb_month.getValue().toString());
-		// userData.setYear(cmb_year.getValue().toString());
+        userData.setFirstName(firstnameField.getText());
+        if (maleRadioButton.isSelected()) {
+            userData.setGender("Male");
+        } else if (femaleRadioButton.isSelected()) {
+            userData.setGender("Female");
+        }
         userData.setdob(dobDatePicker.getValue().toString());
-		userData.setEmail(emailField.getText());
-		userData.setPassword(passwordField.getText());
-		userData.setConfirmPassword(confirmPassField.getText());
-		return userData;
-	}
+        userData.setEmail(emailField.getText());
+        userData.setPassword(passwordField.getText());
+        userData.setConfirmPassword(confirmPassField.getText());
+        return userData;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        userData = new User();
         ScrollPane scrollPane = new ScrollPane();
 
         signUpstage = primaryStage;
@@ -170,31 +167,25 @@ public class SignUp extends Application {
         });
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-//				Filing fileWrite = new Filing();
-//				System.out.println(fileWrite.readData("signup.txt"));
-//				fileWrite.writeData(getUserDetails(), "signup.txt");
-				Authentication auth = new Authentication();
-				auth.signUp(getUserDetails());
-			}
-		});
-        // signUpButton.setOnAction(new EventHandler<ActionEvent>() {
-
-        //     @Override
-        //     public void handle(ActionEvent event) {
-        //         HomePage homePage = new HomePage();
-
-        //         try {
-        //             homePage.start(signUpstage);
-        //         } catch (Exception e) {
-        //             // TODO Auto-generated catch block
-        //             e.printStackTrace();
-        //         }
-
-        //     }
-
-        // });
+            @Override
+            public void handle(ActionEvent event) {
+                boolean confirm;
+                // Filing fileWrite = new Filing();
+                // System.out.println(fileWrite.readData("signup.txt"));
+                // fileWrite.writeData(getUserDetails(), "signup.txt");
+                Authentication auth = new Authentication();
+                confirm = auth.signUp(getUserDetails());
+                if (confirm == false) {
+                    HomePage home = new HomePage();
+                    try {
+                        home.start(signUpstage);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         signUp = new Scene(signUpPane, 800, 600);
         signUpstage.setResizable(false);

@@ -10,14 +10,6 @@ public class User {
 		return this.firstName;
 	}
 
-	public void setLastName(String param) {
-		this.lastName = param;
-	}
-
-	public String getLastName() {
-		return this.lastName;
-	}
-
 	public void setGender(String param) {
 		this.gender = param;
 	}
@@ -26,19 +18,7 @@ public class User {
 		return this.gender;
 	}
 
-	// public void setDate(String param) {
-	// 	this.date = param;
-	// }
-
-	// public void setMonth(String param) {
-	// 	this.month = param;
-	// }
-
-	// public void setYear(String param) {
-	// 	this.year = param;
-	// }
-
-	public void setdob(String dob){
+	public void setdob(String dob) {
 		this.DOB = dob;
 	}
 
@@ -71,7 +51,7 @@ public class User {
 	}
 
 	public String toString() {
-		return this.firstName + "," + this.lastName + "," + this.gender + "," + this.getDOB() + "," + this.email + ","
+		return this.firstName + "," + this.gender + "," + this.getDOB() + "," + this.email + ","
 				+ this.password;
 	}
 }

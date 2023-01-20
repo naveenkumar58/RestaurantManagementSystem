@@ -136,16 +136,19 @@ public class Login extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                HomePage homePage = new HomePage();
+                Boolean correctEmailPassword;
+                Authentication auth = new Authentication();
+                correctEmailPassword = auth.signIn(emailField.getText(), passwordField.getText());
+                if (correctEmailPassword == true) {
+                    HomePage home = new HomePage();
+                    try {
+                        home.start(stage);
+                    } catch (Exception e) {
 
-                try {
-                    homePage.start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        e.printStackTrace();
+                    }
                 }
-
             }
-
         });
 
         LoginScene = new Scene(loginAnchorPane, 800, 600);
