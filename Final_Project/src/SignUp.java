@@ -20,7 +20,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -56,35 +60,67 @@ public class SignUp extends Application {
 
         signUpstage = primaryStage;
         Label firstName = new Label("Username");
+        firstName.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        firstName.setTextFill(Color.WHITE);
         firstnameField = new TextField();
 
         Label emailLabel = new Label("Email Address");
+        emailLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        emailLabel.setTextFill(Color.WHITE);
         emailField = new TextField();
 
         Label passLabel = new Label("Password");
+        passLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        passLabel.setTextFill(Color.WHITE);
         passwordField = new PasswordField();
 
         Label confirmPassLabel = new Label("Confirm Password");
+        confirmPassLabel.setTextFill(Color.WHITE);
+        confirmPassLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
         confirmPassField = new PasswordField();
 
         Label gender = new Label("Gender");
+        gender.setTextFill(Color.WHITE);
+        gender.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
         ToggleGroup rbToggle = new ToggleGroup();
         maleRadioButton = new RadioButton("Male");
+        maleRadioButton.setTextFill(Color.WHITE);
+        maleRadioButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
         femaleRadioButton = new RadioButton("Female");
+        femaleRadioButton.setTextFill(Color.WHITE);
+        femaleRadioButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
         maleRadioButton.setToggleGroup(rbToggle);
         femaleRadioButton.setToggleGroup(rbToggle);
 
         Label dobLabel = new Label("Date Of Birth");
+        dobLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        dobLabel.setTextFill(Color.WHITE);
         dobDatePicker = new DatePicker();
 
         Button signUpButton = new Button("Sign Up");
+        signUpButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 14));
+        signUpButton.setStyle("-fx-background-radius: 10px; -fx-background-color: BLUE;");
+        // signUpButton.setFont(Font.font(null, FontWeight.BOLD, 12));
+        signUpButton.setTextFill(Color.WHITE);
+        signUpButton.setOnMouseEntered(e -> signUpButton.setEffect(new DropShadow()));
+        signUpButton.setOnMouseExited(e -> signUpButton.setEffect(null));
         signUpButton.setCursor(Cursor.HAND);
 
         Button cancelButton = new Button("Cancel");
+        cancelButton.setStyle("-fx-background-radius: 10px; -fx-background-color: RED;");
+        cancelButton.setFont(Font.font(null, FontWeight.BOLD, 14));
+        cancelButton.setTextFill(Color.WHITE);
+        // cancelButton.setPrefWidth(80);
+        cancelButton.setOnMouseEntered(e -> cancelButton.setEffect(new DropShadow()));
+        cancelButton.setOnMouseExited(e -> cancelButton.setEffect(null));
         cancelButton.setCursor(Cursor.HAND);
 
         CheckBox showPass = new CheckBox("Show Password");
+        showPass.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        showPass.setTextFill(Color.WHITE);
         CheckBox showConfirmPass = new CheckBox("Show Password");
+        showConfirmPass.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        showConfirmPass.setTextFill(Color.WHITE);
         TextField passText = new TextField();
         TextField confirmPassText = new TextField();
 
@@ -149,6 +185,8 @@ public class SignUp extends Application {
         signUpPane.add(signUpButton, 2, 8);
         signUpPane.add(cancelButton, 2, 8);
         signUpPane.setMargin(cancelButton, new Insets(0, 0, 0, 80));
+
+        signUpPane.setStyle("-fx-background-color: #FF6347;");
 
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
