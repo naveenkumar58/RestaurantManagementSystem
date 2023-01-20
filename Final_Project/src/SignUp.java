@@ -28,34 +28,54 @@ public class SignUp extends Application {
 
     Scene signUp;
     Stage signUpstage;
+    Login loginObj = new Login();
+    User userData;
+    TextField firstnameField, emailField;
+    RadioButton maleRadioButton, femaleRadioButton;
+    DatePicker dobDatePicker;
+    PasswordField passwordField, confirmPassField;
+
+    public User getUserDetails() {
+        userData.setFirstName(firstnameField.getText());
+        if (maleRadioButton.isSelected()) {
+            userData.setGender("Male");
+        } else if (femaleRadioButton.isSelected()) {
+            userData.setGender("Female");
+        }
+        userData.setdob(dobDatePicker.getValue().toString());
+        userData.setEmail(emailField.getText());
+        userData.setPassword(passwordField.getText());
+        userData.setConfirmPassword(confirmPassField.getText());
+        return userData;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        userData = new User();
         ScrollPane scrollPane = new ScrollPane();
 
         signUpstage = primaryStage;
         Label firstName = new Label("Username");
-        TextField firstnameField = new TextField();
+        firstnameField = new TextField();
 
         Label emailLabel = new Label("Email Address");
-        TextField emailField = new TextField();
+        emailField = new TextField();
 
         Label passLabel = new Label("Password");
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
 
         Label confirmPassLabel = new Label("Confirm Password");
-        PasswordField confirmPassField = new PasswordField();
+        confirmPassField = new PasswordField();
 
         Label gender = new Label("Gender");
         ToggleGroup rbToggle = new ToggleGroup();
-        RadioButton maleRadioButton = new RadioButton("Male");
-        RadioButton femaleRadioButton = new RadioButton("Female");
+        maleRadioButton = new RadioButton("Male");
+        femaleRadioButton = new RadioButton("Female");
         maleRadioButton.setToggleGroup(rbToggle);
         femaleRadioButton.setToggleGroup(rbToggle);
 
         Label dobLabel = new Label("Date Of Birth");
-        DatePicker dobDatePicker = new DatePicker();
+        dobDatePicker = new DatePicker();
 
         Button signUpButton = new Button("Sign Up");
         signUpButton.setCursor(Cursor.HAND);
@@ -145,22 +165,26 @@ public class SignUp extends Application {
             }
 
         });
-
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                HomePage homePage = new HomePage();
-
-                try {
-                    homePage.start(signUpstage);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                boolean confirm;
+                // Filing fileWrite = new Filing();
+                // System.out.println(fileWrite.readData("signup.txt"));
+                // fileWrite.writeData(getUserDetails(), "signup.txt");
+                Authentication auth = new Authentication();
+                confirm = auth.signUp(getUserDetails());
+                if (confirm == false) {
+                    HomePage home = new HomePage();
+                    try {
+                        home.start(signUpstage);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
-
             }
-
         });
 
         signUp = new Scene(signUpPane, 800, 600);
