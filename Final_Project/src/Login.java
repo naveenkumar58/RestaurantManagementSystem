@@ -46,24 +46,33 @@ public class Login extends Application {
 
         showPass.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				if (showPass.isSelected()) {
-					passText.setText(passwordField.getText());
-					passText.setVisible(true);
-					passwordField.setVisible(false);
-					return;
-				} else {
-					passwordField.setText(passText.getText());
-					passwordField.setVisible(true);
-					passText.setVisible(false);
-				}
+            @Override
+            public void handle(ActionEvent event) {
+                if (showPass.isSelected()) {
+                    passText.setText(passwordField.getText());
+                    passText.setVisible(true);
+                    passwordField.setVisible(false);
+                    return;
+                } else {
+                    passwordField.setText(passText.getText());
+                    passwordField.setVisible(true);
+                    passText.setVisible(false);
+                }
 
-			}
-		});
+            }
+        });
 
         Button LoginButton = new Button("Login");
         LoginButton.setCursor(Cursor.HAND);
+        LoginButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Authentication auth = new Authentication();
+                auth.signIn(emailField.getText(), passwordField.getText());
+            }
+        });
+
         Button signUpButton = new Button("Sign Up");
         signUpButton.setCursor(Cursor.HAND);
         signUpButton.setStyle("-fx-background-color: transparent;");
@@ -127,16 +136,19 @@ public class Login extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                HomePage homePage = new HomePage();
+                Boolean correctEmailPassword;
+                Authentication auth = new Authentication();
+                correctEmailPassword = auth.signIn(emailField.getText(), passwordField.getText());
+                if (correctEmailPassword == true) {
+                    HomePage home = new HomePage();
+                    try {
+                        home.start(stage);
+                    } catch (Exception e) {
 
-                try {
-                    homePage.start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        e.printStackTrace();
+                    }
                 }
-
             }
-
         });
 
         LoginScene = new Scene(loginAnchorPane, 800, 600);
