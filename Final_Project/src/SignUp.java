@@ -186,7 +186,7 @@ public class SignUp extends Application {
         signUpPane.add(cancelButton, 2, 8);
         signUpPane.setMargin(cancelButton, new Insets(0, 0, 0, 80));
 
-        signUpPane.setStyle("-fx-background-color: #FF6347;");
+        signUpPane.setStyle("-fx-background-color: #686BFF;");
 
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 

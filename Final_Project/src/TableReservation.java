@@ -7,39 +7,42 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.stage.PopupWindow.AnchorLocation;
 
-public class Cart extends Application {
+public class TableReservation extends Application {
+    
+    Stage TableReservation;
+    Scene TableReservationScene;
 
-    Stage cartPage;
-    Scene CartPageScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        cartPage = primaryStage;
+
+        TableReservation = primaryStage;
+
+        primaryStage.setTitle("Table Reservation");
 
         Separator separator = new Separator(Orientation.VERTICAL);
         separator.setMinHeight(600);
 
-        Text cartLabel = new Text("CART");
-        cartLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        cartLabel.setFill(Color.web("#686BFF",1));
+        Text label = new Text("TABLE RESERVATION");
+        label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
+        label.setFill(Color.web("#686BFF",1));
 
         // HOME BUTTON
         Image home = new Image("images/home.png");
@@ -108,91 +111,68 @@ public class Cart extends Application {
         logOutButton.setTextFill(Color.WHITE);
         logOutButton.setCursor(Cursor.HAND);
 
-        // CLEAR ALL BUTTON
-        Button clearAllBut = new Button("Clear All");
-        clearAllBut.setStyle("-fx-background-radius: 20; -fx-background-color: RED;");
-        clearAllBut.setFont(Font.font(null, FontWeight.BOLD, 14));
-        clearAllBut.setTextFill(Color.WHITE);
-        clearAllBut.setPrefWidth(80);
-        clearAllBut.setOnMouseEntered(e -> clearAllBut.setEffect(new DropShadow()));
-        clearAllBut.setOnMouseExited(e -> clearAllBut.setEffect(null));
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
 
-        // VBox root = new VBox();
-        // root.setPadding(new Insets(10));
-        // root.setSpacing(10);
-        // root.setAlignment(Pos.CENTER);
-        // root.getChildren().addAll(clearAllBut);
+ 
 
-        // CLEAR BUTTON
-        Button clearBut = new Button("Clear");
-        clearBut.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
-        clearBut.setFont(Font.font(null, FontWeight.BOLD, 14));
-        clearBut.setTextFill(Color.WHITE);
-        // clearBut.setPrefWidth(80);
-        clearBut.setOnMouseEntered(e -> clearBut.setEffect(new DropShadow()));
-        clearBut.setOnMouseExited(e -> clearBut.setEffect(null));
+        Label nameLabel = new Label("Name:");
+        nameLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        nameLabel.setTextFill(Color.BLACK);
+        grid.add(nameLabel, 0, 1);
 
-        // VBox root2 = new VBox();
-        // root2.setPadding(new Insets(10));
-        // root2.setSpacing(10);
-        // root2.setAlignment(Pos.CENTER);
-        // root2.getChildren().addAll(clearBut, cartLabel);
+        TextField nameField = new TextField();
+        nameField.setStyle("-fx-background-radius: 20;");
+        grid.add(nameField, 1, 1);
 
-        // PLACE ORDER BUTTON
-        Button placeOrderButton = new Button("Place Order");
-        placeOrderButton.setStyle("-fx-background-radius: 20; -fx-background-color: GREEN;");
-        placeOrderButton.setFont(Font.font(null, FontWeight.BOLD, 14));
-        placeOrderButton.setTextFill(Color.WHITE);
-        placeOrderButton.setPrefWidth(80);
-        placeOrderButton.setOnMouseEntered(e -> placeOrderButton.setEffect(new DropShadow()));
-        placeOrderButton.setOnMouseExited(e -> placeOrderButton.setEffect(null));
+        Label phoneLabel = new Label("Phone No:");
+        phoneLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        phoneLabel.setTextFill(Color.BLACK);
+        grid.add(phoneLabel, 0, 2);
 
-        // VBox root3 = new VBox();
-        // root3.setPadding(new Insets(10));
-        // root3.setSpacing(10);
-        // root3.setAlignment(Pos.CENTER);
-        // root3.getChildren().addAll(placeOrderButton);
+        TextField phoneField = new TextField();
+        phoneField.setStyle("-fx-background-radius: 20;");
+        grid.add(phoneField, 1, 2);
 
-        // TOTAL LABEL
-        Label paymentLabel = new Label("GRAND TOTAL");
-        paymentLabel.setFont(Font.font(null, FontWeight.BOLD, 16));
+        Label dateLabel = new Label("Date:");
+        dateLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        dateLabel.setTextFill(Color.BLACK);
+        grid.add(dateLabel, 0, 3);
+        
+        DatePicker datePicker = new DatePicker();
+        grid.add(datePicker, 1, 3);
 
-        TableView cartTable = new TableView<>();
-        // cartTable.setEditable(true);
-        // TableView<String> itemNameColumn = new TableView<>();
-        // cartTable.getColumns().add(itemNameColumn);
-        // TableView<String> costColumn = new TableView<>();
-        // TableView<String> quantityColumn = new TableView<>();
-        // TableView addColumn = new TableView<>();
-        // TableView substractColumn = new TableView<>();
-        // TableColumn<String> itemNameColumn = new TableColumn("Item Name");
-        // itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("itemname"));
-        // TableColumn<String> costColumn = new TableColumn("Cost");
-        // costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
-        // TableColumn< String> quantityColumn = new TableColumn("Quantity");
-        // quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        // TableColumn<String> addColumn = new TableColumn("");
-        // addColumn.setCellValueFactory(new PropertyValueFactory<>(""));
-        // TableColumn<String> substractColumn = new TableColumn("");
-        // substractColumn.setCellValueFactory(new PropertyValueFactory<>(""));
-        // cartTable.getColumns().addAll(itemNameColumn,costColumn,quantityColumn,addColumn,substractColumn);
+        Label personLabel = new Label("Persons:");
+        personLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        personLabel.setTextFill(Color.BLACK);
+        grid.add(personLabel, 0, 4);
 
-        // GridPane homeGrid = new GridPane();
-        // ScrollPane scroll = new ScrollPane();
-        // Pane sidePane = new Pane();
-        // sidePane.setPrefSize(200, 600);
-        AnchorPane leftPane = new AnchorPane(separator, menuButton, cartButton, homeButton, logOutButton,
+        ComboBox<String> personsBox = new ComboBox<>();
+        personsBox.setStyle("-fx-background-radius: 20;");
+        personsBox.setPromptText("Select Persons");
+        personsBox.setMaxWidth(250);
+        personsBox.getItems().addAll("1", "3", "5", "7", "9", "12");
+        grid.add(personsBox, 1, 4);
+   
+        Button submitButton = new Button("Submit");
+        submitButton.setMaxWidth(200);
+        submitButton.setTextFill(Color.WHITE);
+        submitButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 14));
+        submitButton.setCursor(Cursor.HAND);
+        submitButton.setOnMouseEntered(e -> submitButton.setEffect(new DropShadow()));
+        submitButton.setOnMouseExited(e -> submitButton.setEffect(null));
+        submitButton.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
+        grid.add(submitButton, 1, 5);
+
+        AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
-        AnchorPane rightPane = new AnchorPane(cartTable, clearAllBut, clearBut, placeOrderButton,
-                paymentLabel, cartLabel);
         leftPane.setStyle("-fx-background-color: #686BFF;");
+        AnchorPane rightPane = new AnchorPane(label, grid);
         AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
 
-        // AnchorPane.setRightAnchor(sidePane, 400.0);
-        // sidePane.setBackground(new Background(new BackgroundFill(Color.RED,
-        // CornerRadii.EMPTY, Insets.EMPTY)));
-
-       
         AnchorPane.setLeftAnchor(leftPane, 0.0);
         AnchorPane.setRightAnchor(leftPane, 600.0);
         AnchorPane.setBottomAnchor(leftPane, 0.0);
@@ -221,36 +201,16 @@ public class Cart extends Application {
         AnchorPane.setLeftAnchor(tableResButton, 10.0);
         AnchorPane.setTopAnchor(tableResButton, 230.0);
 
-        AnchorPane.setLeftAnchor(cartTable, 0.0);
-        AnchorPane.setRightAnchor(cartTable, 0.0);
-        AnchorPane.setTopAnchor(cartTable, 80.0);
-        AnchorPane.setBottomAnchor(cartTable, 150.0);
+        AnchorPane.setLeftAnchor(label, 150.0);
+        AnchorPane.setTopAnchor(label, 40.0);
+        AnchorPane.setBottomAnchor(label, 400.0);
 
-        AnchorPane.setLeftAnchor(clearAllBut, 160.0);
-        AnchorPane.setRightAnchor(clearAllBut, 310.0);
-        AnchorPane.setTopAnchor(clearAllBut, 500.0);
-        AnchorPane.setBottomAnchor(clearAllBut, 110.0);
+        AnchorPane.setLeftAnchor(grid, 10.0);
+        AnchorPane.setBottomAnchor(grid, 35.0);
+        AnchorPane.setRightAnchor(grid, 30.0);
+        AnchorPane.setTopAnchor(grid, 170.0);
 
-        AnchorPane.setLeftAnchor(clearBut, 10.0);
-        AnchorPane.setRightAnchor(clearBut, 450.0);
-        AnchorPane.setTopAnchor(clearBut, 500.0);
-        AnchorPane.setBottomAnchor(clearBut, 110.0);
-
-        AnchorPane.setLeftAnchor(cartLabel, 270.0);
-        AnchorPane.setTopAnchor(cartLabel, 20.0);
-        AnchorPane.setBottomAnchor(cartLabel, 110.0);
-
-        AnchorPane.setLeftAnchor(placeOrderButton, 410.0);
-        AnchorPane.setRightAnchor(placeOrderButton, 30.0);
-        AnchorPane.setTopAnchor(placeOrderButton, 500.0);
-        AnchorPane.setBottomAnchor(placeOrderButton, 110.0);
-
-        AnchorPane.setLeftAnchor(paymentLabel, 350.0);
-        AnchorPane.setTopAnchor(paymentLabel, 530.0);
-        AnchorPane.setBottomAnchor(paymentLabel, 70.0);
-
-        // scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
-
+      
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -258,7 +218,7 @@ public class Cart extends Application {
                 Login login = new Login();
 
                 try {
-                    login.start(cartPage);
+                    login.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -275,7 +235,7 @@ public class Cart extends Application {
                 Menu menu = new Menu();
 
                 try {
-                    menu.start(cartPage);
+                    menu.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -292,7 +252,7 @@ public class Cart extends Application {
                 Cart cart = new Cart();
 
                 try {
-                    cart.start(cartPage);
+                    cart.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -309,7 +269,7 @@ public class Cart extends Application {
                 HomePage home = new HomePage();
 
                 try {
-                    home.start(cartPage);
+                    home.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -325,7 +285,7 @@ public class Cart extends Application {
                 TableReservation Table = new TableReservation();
 
                 try {
-                    Table.start(cartPage);
+                    Table.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -335,11 +295,9 @@ public class Cart extends Application {
 
         });
 
-
-        CartPageScene = new Scene(a1, 800, 600);
-        cartPage.setResizable(false);
-        cartPage.setScene(CartPageScene);
-        cartPage.show();
-
+        TableReservationScene = new Scene(a1, 800, 600);
+        TableReservation.setScene(TableReservationScene);
+        TableReservation.setResizable(false);
+        TableReservation.show();
     }
 }

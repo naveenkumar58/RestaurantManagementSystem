@@ -31,36 +31,35 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Menu extends Application {
-
-
-    Stage homePage;
-    Scene homePageScene;
+    
+    Stage menuPage;
+    Scene menuPagScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        homePage = primaryStage;
-        
+        menuPage = primaryStage;
+
         Separator separator = new Separator(Orientation.VERTICAL);
         separator.setMinHeight(600);
 
-        Text label = new Text("MENU");
+        Text label = new Text("Menu");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        label.setFill(Color.ORANGERED);
-        
-        
+        label.setFill(Color.web("#686BFF",1));
+
+        // HOME BUTTON
         Image home = new Image("images/home.png");
         ImageView homeImage = new ImageView(home);
-        homeImage.setFitWidth(50);
+        homeImage.setFitWidth(40);
         homeImage.setPreserveRatio(true);
         Button homeButton = new Button();
         homeButton.setText("Home");
-        homeButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        homeButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         homeButton.setGraphic(homeImage);
         homeButton.setStyle("-fx-background-color: transparent;");
+        homeButton.setTextFill(Color.WHITE);
         homeButton.setCursor(Cursor.HAND);
-        
 
-        // Menu Button 
+        // Menu Button
         Image menuViewImage = new Image("images/menu.png");
         ImageView menuImage = new ImageView(menuViewImage);
         menuImage.setFitWidth(40);
@@ -68,91 +67,104 @@ public class Menu extends Application {
         Button menuButton = new Button();
         menuButton.setGraphic(menuImage);
         menuButton.setStyle("-fx-background-color: transparent;");
-        menuButton.setText("Menu");
-        menuButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        menuButton.setText(" Menu");
+        menuButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
+        menuButton.setTextFill(Color.WHITE);
         menuButton.setCursor(Cursor.HAND);
 
         // Cart button
         Image cartViewImage = new Image("images/cart.png");
         ImageView cartImage = new ImageView(cartViewImage);
-        cartImage.setFitWidth(50);
+        cartImage.setFitWidth(40);
         cartImage.setPreserveRatio(true);
         Button cartButton = new Button();
         cartButton.setGraphic(cartImage);
-        cartButton.setText("Cart");
-        cartButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        cartButton.setText(" Cart");
+        cartButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         cartButton.setStyle("-fx-background-color: transparent;");
+        cartButton.setTextFill(Color.WHITE);
         cartButton.setCursor(Cursor.HAND);
-        
+        cartButton.setCursor(Cursor.HAND);
+
         // TABLE RESERVATION
         Image tabkeViewImage = new Image("images/table.png");
         ImageView tableView = new ImageView(tabkeViewImage);
-        tableView.setFitWidth(50);
+        tableView.setFitWidth(40);
         tableView.setPreserveRatio(true);
         Button tableResButton = new Button();
         tableResButton.setGraphic(tableView);
-        tableResButton.setText("Table\nReservation");
-        tableResButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+        tableResButton.setText("Reservation");
+        tableResButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         tableResButton.setStyle("-fx-background-color: transparent;");
         tableResButton.setCursor(Cursor.HAND);
+        tableResButton.setTextFill(Color.WHITE);
         tableResButton.setTextAlignment(TextAlignment.CENTER);
 
         // LOGOUT BUTTON
         Image image2 = new Image("images/logout.png");
         ImageView imageView2 = new ImageView(image2);
-        imageView2.setFitWidth(150);
+        imageView2.setFitWidth(30);
         imageView2.setPreserveRatio(true);
-        Button logoutButton = new Button();
-        logoutButton.setGraphic(imageView2);
-        logoutButton.setStyle("-fx-background-color: transparent;");
-        logoutButton.setCursor(Cursor.HAND);
+        Button logOutButton = new Button();
+        logOutButton.setText("LOGOUT");
+        logOutButton.setGraphic(imageView2);
+        logOutButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        logOutButton.setStyle("-fx-background-color: transparent;");
+        logOutButton.setTextFill(Color.WHITE);
+        logOutButton.setCursor(Cursor.HAND);
 
-        AnchorPane a1 = new AnchorPane(separator,homeButton,menuButton,cartButton,logoutButton,tableResButton,label);
+        AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
+                tableResButton);
+        leftPane.setStyle("-fx-background-color: #686BFF;");
+        AnchorPane rightPane = new AnchorPane(label);
+        AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
+
+        AnchorPane.setLeftAnchor(leftPane, 0.0);
+        AnchorPane.setRightAnchor(leftPane, 600.0);
+        AnchorPane.setBottomAnchor(leftPane, 0.0);
+
+        AnchorPane.setLeftAnchor(rightPane, 200.0);
+        AnchorPane.setRightAnchor(rightPane, 0.0);
 
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
 
-        AnchorPane.setTopAnchor(homeButton, 20.0);
-        AnchorPane.setLeftAnchor(homeButton, 0.0);
-        AnchorPane.setRightAnchor(homeButton, 630.0);
+        AnchorPane.setTopAnchor(homeButton, 40.0);
+        AnchorPane.setLeftAnchor(homeButton, 10.0);
+        AnchorPane.setRightAnchor(homeButton, 30.0);
 
-        AnchorPane.setLeftAnchor(menuButton, 0.0);
-        AnchorPane.setRightAnchor(menuButton, 630.0);
-        AnchorPane.setTopAnchor(menuButton, 80.0);
+        AnchorPane.setLeftAnchor(menuButton, 20.0);
+        AnchorPane.setTopAnchor(menuButton, 100.0);
 
-        AnchorPane.setLeftAnchor(cartButton, 15.0);
-        // AnchorPane.setRightAnchor(cartButton, 630.0);
-        AnchorPane.setTopAnchor(cartButton, 130.0);
+        AnchorPane.setLeftAnchor(cartButton, 20.0);
+        AnchorPane.setTopAnchor(cartButton, 160.0);
 
-        AnchorPane.setLeftAnchor(logoutButton, 30.0);
-        AnchorPane.setBottomAnchor(logoutButton, 5.0);
+        AnchorPane.setLeftAnchor(logOutButton, 10.0);
+        AnchorPane.setBottomAnchor(logOutButton, 35.0);
+        AnchorPane.setRightAnchor(logOutButton, 30.0);
+        AnchorPane.setTopAnchor(logOutButton, 540.0);
 
+        AnchorPane.setLeftAnchor(tableResButton, 10.0);
+        AnchorPane.setTopAnchor(tableResButton, 230.0);
 
-        AnchorPane.setLeftAnchor(tableResButton, 0.0);
-        AnchorPane.setRightAnchor(tableResButton, 630.0);
-        AnchorPane.setTopAnchor(tableResButton, 200.0);
-        // AnchorPane.setBottomAnchor(tableResButton, 30.0);
-
-        
-        AnchorPane.setLeftAnchor(label, 430.0);
+        AnchorPane.setLeftAnchor(label, 250.0);
         AnchorPane.setTopAnchor(label, 20.0);
         AnchorPane.setBottomAnchor(label, 400.0);
-
-        logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
                 Login login = new Login();
 
                 try {
-                    login.start(homePage);
+                    login.start(menuPage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
 
         menuButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -162,14 +174,14 @@ public class Menu extends Application {
                 Menu menu = new Menu();
 
                 try {
-                    menu.start(homePage);
+                    menu.start(menuPage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
 
         cartButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -179,17 +191,16 @@ public class Menu extends Application {
                 Cart cart = new Cart();
 
                 try {
-                    cart.start(homePage);
+                    cart.start(menuPage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
 
-        
         homeButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -197,21 +208,36 @@ public class Menu extends Application {
                 HomePage home = new HomePage();
 
                 try {
-                    home.start(homePage);
+                    home.start(menuPage);
                 } catch (Exception e) {
-                    
+
                     e.printStackTrace();
                 }
-                
+
             }
-            
+
         });
-        // naveen learning branch created
-        homePageScene = new Scene(a1,800,600);
-        homePage.setResizable(false);
-        homePage.setScene(homePageScene);
-        homePage.show();
+        tableResButton.setOnAction(new EventHandler<ActionEvent>() {
 
+            @Override
+            public void handle(ActionEvent event) {
+                TableReservation Table = new TableReservation();
+
+                try {
+                    Table.start(menuPage);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        menuPagScene = new Scene(a1, 800, 600);
+        menuPage.setTitle("Home Page");
+        menuPage.setResizable(false);
+        menuPage.setScene(menuPagScene);
+        menuPage.show();
     }
-
 }

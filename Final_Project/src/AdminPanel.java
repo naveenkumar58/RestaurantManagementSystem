@@ -88,7 +88,7 @@ public class AdminPanel extends Application {
         sep2.setMinHeight(600);
 
         AnchorPane left_pane = new AnchorPane(imageView, adminLabel);
-        left_pane.setStyle("-fx-background-color: #FF6347;");
+        left_pane.setStyle("-fx-background-color: #686BFF;");
         AnchorPane right_pane = new AnchorPane(left_pane,p_name, p_text, p_price, price_text, add_btn, dlt_btn, sep2,
                 update_btn, menu_items);
         // AnchorPane a1 = new AnchorPane(left_pane, right_pane);
@@ -155,6 +155,7 @@ public class AdminPanel extends Application {
         AnchorPane.setTopAnchor(dlt_btn, 320.0);
 
         adminScene = new Scene(right_pane, 800, 600);
+        adminStage.setResizable(false);
         adminStage.setScene(adminScene);
         adminStage.show();
 
