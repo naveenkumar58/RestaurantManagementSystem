@@ -42,7 +42,7 @@ public class Filing {
 		return exists;
 	}
 
-	public void addProductFile(String data, String fileName) {
+	public void addProducts(String data, String fileName) {
 		try {
 
 			FileWriter fileWriter = new FileWriter(fileName, true);
@@ -63,14 +63,13 @@ public class Filing {
 	}
 
 	public Boolean deletProductByName(String productName, String fileName) {
-
 		Boolean success = false;
 		ArrayList<String> arrlist = new ArrayList<String>();
 		arrlist = this.readData(fileName);
 		this.deleteProductFile(fileName);
 		for (String p : arrlist) {
 			if (!(p.startsWith(productName))) {
-				this.addProductFile(p, fileName);
+				this.addProducts(p, fileName);
 			} else {
 				success = true;
 			}
@@ -86,9 +85,9 @@ public class Filing {
 		this.deleteProductFile(fileName);
 		for (String p : arrlist) {
 			if (p.startsWith(productName)) {
-				this.addProductFile(product, fileName);
+				this.addProducts(product, fileName);
 			} else {
-				this.addProductFile(p, fileName);
+				this.addProducts(p, fileName);
 				// success = true;
 			}
 		}

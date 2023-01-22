@@ -1,2 +1,2 @@
-burger,10
-dosa,50
+dosa,500
+biryani,500

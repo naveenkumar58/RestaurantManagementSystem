@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
+import javax.lang.model.util.ElementScanner6;
+
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -8,10 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,22 +33,40 @@ public class AdminPanel extends Application {
 
     Stage adminStage;
     Scene adminScene;
-    Products Product;
+    Products ProductObj;
     TextField p_text, price_text;
+    String productsFile = "products.txt";
+    Filing product;
+    public void CheckproductExist(){
+        if (product.isExists(p_text.getText(), productsFile)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Product already exists!");
+            alert.show();
+
+        } else {
+            product.addProducts(addProductDetails().toString(), productsFile);
+            Alert addAlert = new Alert(Alert.AlertType.INFORMATION);
+            addAlert.setContentText("Item Added Successfully!");
+            addAlert.show();
+            p_text.clear();
+            price_text.clear();
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
     }
 
     public Products addProductDetails() {
-        Product.setProductName(p_text.getText());
-        Product.setProductPrice(price_text.getText());
-        return Product;
+        ProductObj.setProductName(p_text.getText());
+        ProductObj.setProductPrice(price_text.getText());
+        return ProductObj;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Product = new Products();
+        ProductObj = new Products();
+        product = new Filing();
         adminStage = primaryStage;
 
         Image admin_img = new Image("images/admin.png");
@@ -96,6 +122,23 @@ public class AdminPanel extends Application {
         dlt_btn.setOnMouseExited(e -> dlt_btn.setEffect(null));
 
         TableView menu_items = new TableView<>();
+
+        // TableColumn itemNameColumn = new TableColumn<>("Product Name");
+        // itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        // menu_items.setEditable(true);
+        // // menu_items.getColumns().add(itemNameColumn);
+
+        // TableColumn itemPriceColumn = new TableColumn<>("Product price");
+        // itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        // menu_items.setEditable(true);
+        // // menu_items.getColumns().add(itemPriceColumn);
+        // ArrayList<String> arrlist = new ArrayList<String>();
+        // arrlist =  product.readData("products.txt");
+        // ObservableList<String> oListStavaka = FXCollections.observableArrayList(arrlist);
+        // menu_items.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // menu_items.setItems(oListStavaka);
+
+        // menu_items.getColumns().addAll(itemNameColumn,itemPriceColumn);
 
         // Separator sep =new Separator(Orientation.VERTICAL);
         // sep.minHeight(600);
@@ -173,15 +216,11 @@ public class AdminPanel extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                // TODO Auto-generated method stub
-                Filing addProduct = new Filing();
-                if (addProduct.isExists(p_text.getText(), "products.txt")) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Product already exists!");
-                    alert.show();
-
+                if (p_text.getText().equals("") || price_text.getText().equals("")) {                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
+                    fieldAlert.setContentText("Fill all the fields");
+                    fieldAlert.show();
                 } else {
-                    addProduct.addProductFile(addProductDetails().toString(), "products.txt");
+                    CheckproductExist();
                 }
             }
 
@@ -191,17 +230,39 @@ public class AdminPanel extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                Filing product = new Filing();
-                product.deletProductByName(p_text.getText(), "products.txt");
+                // System.out.println("Love: "+ p_text.getclass);
+                
+                if (p_text.getText().equals("") || price_text.getText().equals("")) {
+                   Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
+                    fieldAlert.setContentText("Fill all the fields");
+                    fieldAlert.show();
+
+                } else {
+                    product.deletProductByName(p_text.getText(), productsFile);
+                    Alert delAlert = new Alert(Alert.AlertType.INFORMATION);
+                    delAlert.setContentText("Item Deleted Successfully!");
+                    delAlert.show();
+                    p_text.clear();
+                    price_text.clear();
             }
+        }
         });
 
         update_btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                Filing product = new Filing();
-                product.updateProduct(p_text.getText(), addProductDetails().toString(), "products.txt");
+                if (p_text.getText().equals("") || price_text.getText().equals("")) {                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
+                    fieldAlert.setContentText("Fill all the fields");
+                    fieldAlert.show();
+                } else {
+                    product.updateProduct(p_text.getText(), addProductDetails().toString(), productsFile);
+                    Alert updateAlert = new Alert(Alert.AlertType.INFORMATION);
+                    updateAlert.setContentText("Item Updated Successfully!");
+                    updateAlert.show();
+                    p_text.clear();
+                    price_text.clear();
+                }
             }
 
         });
