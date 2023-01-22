@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,13 +25,22 @@ public class AdminPanel extends Application {
 
     Stage adminStage;
     Scene adminScene;
+    Products Product;
+    TextField p_text, price_text;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public Products addProductDetails() {
+        Product.setProductName(p_text.getText());
+        Product.setProductPrice(price_text.getText());
+        return Product;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Product = new Products();
         adminStage = primaryStage;
 
         Image admin_img = new Image("images/admin.png");
@@ -43,13 +58,13 @@ public class AdminPanel extends Application {
         adminLabel.setTextFill(Color.WHITE);
 
         Label p_name = new Label("Product Name");
-        TextField p_text = new TextField();
+        p_text = new TextField();
         p_text.setStyle("-fx-background-radius: 10px;");
         p_name.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
 
         Label p_price = new Label("Product Price");
         p_price.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
-        TextField price_text = new TextField();
+        price_text = new TextField();
         price_text.setStyle("-fx-background-radius: 10px;");
 
         Button add_btn = new Button("Add");
@@ -89,7 +104,7 @@ public class AdminPanel extends Application {
 
         AnchorPane left_pane = new AnchorPane(imageView, adminLabel);
         left_pane.setStyle("-fx-background-color: #686BFF;");
-        AnchorPane right_pane = new AnchorPane(left_pane,p_name, p_text, p_price, price_text, add_btn, dlt_btn, sep2,
+        AnchorPane right_pane = new AnchorPane(left_pane, p_name, p_text, p_price, price_text, add_btn, dlt_btn, sep2,
                 update_btn, menu_items);
         // AnchorPane a1 = new AnchorPane(left_pane, right_pane);
 
@@ -153,6 +168,43 @@ public class AdminPanel extends Application {
         AnchorPane.setRightAnchor(dlt_btn, 80.0);
         AnchorPane.setBottomAnchor(dlt_btn, 230.0);
         AnchorPane.setTopAnchor(dlt_btn, 320.0);
+
+        add_btn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                // TODO Auto-generated method stub
+                Filing addProduct = new Filing();
+                if (addProduct.isExists(p_text.getText(), "products.txt")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Product already exists!");
+                    alert.show();
+
+                } else {
+                    addProduct.addProductFile(addProductDetails().toString(), "products.txt");
+                }
+            }
+
+        });
+
+        dlt_btn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Filing product = new Filing();
+                product.deletProductByName(p_text.getText(), "products.txt");
+            }
+        });
+
+        update_btn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Filing product = new Filing();
+                product.updateProduct(p_text.getText(), addProductDetails().toString(), "products.txt");
+            }
+
+        });
 
         adminScene = new Scene(right_pane, 800, 600);
         adminStage.setResizable(false);

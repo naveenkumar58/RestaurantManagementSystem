@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -27,6 +28,74 @@ public class Filing {
 			e.printStackTrace();
 		}
 	}
+
+	// Product Start
+	public Boolean isExists(String name, String fileName) {
+		Boolean exists = false;
+		ArrayList<String> arrlist = new ArrayList<String>();
+		arrlist = this.readData(fileName);
+		for (String p : arrlist) {
+			if (p.startsWith(name)) {
+				exists = true;
+			}
+		}
+		return exists;
+	}
+
+	public void addProductFile(String data, String fileName) {
+		try {
+
+			FileWriter fileWriter = new FileWriter(fileName, true);
+			fileWriter.write(data + "\n");
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteProductFile(String fileName) {
+		try {
+			File fl = new File(fileName);
+			fl.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Boolean deletProductByName(String productName, String fileName) {
+
+		Boolean success = false;
+		ArrayList<String> arrlist = new ArrayList<String>();
+		arrlist = this.readData(fileName);
+		this.deleteProductFile(fileName);
+		for (String p : arrlist) {
+			if (!(p.startsWith(productName))) {
+				this.addProductFile(p, fileName);
+			} else {
+				success = true;
+			}
+		}
+		return success;
+	}
+
+	public void updateProduct(String productName, String product, String fileName) {
+
+		// Boolean success = false;
+		ArrayList<String> arrlist = new ArrayList<String>();
+		arrlist = this.readData(fileName);
+		this.deleteProductFile(fileName);
+		for (String p : arrlist) {
+			if (p.startsWith(productName)) {
+				this.addProductFile(product, fileName);
+			} else {
+				this.addProductFile(p, fileName);
+				// success = true;
+			}
+		}
+		// return success;
+	}
+
+	// Product End
 
 	public ArrayList<String> readData(String fileName) {
 		ArrayList<String> arrayList = new ArrayList<String>();
