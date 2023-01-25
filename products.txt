@@ -1,2 +1,2 @@
-dosa,500
-biryani,500
+biryani,150
+dosa,50

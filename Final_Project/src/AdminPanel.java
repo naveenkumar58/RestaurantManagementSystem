@@ -37,7 +37,8 @@ public class AdminPanel extends Application {
     TextField p_text, price_text;
     String productsFile = "products.txt";
     Filing product;
-    public void CheckproductExist(){
+
+    public void CheckproductExist() {
         if (product.isExists(p_text.getText(), productsFile)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Product already exists!");
@@ -133,8 +134,9 @@ public class AdminPanel extends Application {
         // menu_items.setEditable(true);
         // // menu_items.getColumns().add(itemPriceColumn);
         // ArrayList<String> arrlist = new ArrayList<String>();
-        // arrlist =  product.readData("products.txt");
-        // ObservableList<String> oListStavaka = FXCollections.observableArrayList(arrlist);
+        // arrlist = product.readData("products.txt");
+        // ObservableList<String> oListStavaka =
+        // FXCollections.observableArrayList(arrlist);
         // menu_items.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         // menu_items.setItems(oListStavaka);
 
@@ -216,7 +218,8 @@ public class AdminPanel extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                if (p_text.getText().equals("") || price_text.getText().equals("")) {                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
+                if (p_text.getText().equals("") || price_text.getText().equals("")) {
+                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
                     fieldAlert.setContentText("Fill all the fields");
                     fieldAlert.show();
                 } else {
@@ -231,37 +234,46 @@ public class AdminPanel extends Application {
             @Override
             public void handle(ActionEvent event) {
                 // System.out.println("Love: "+ p_text.getclass);
-                
-                if (p_text.getText().equals("") || price_text.getText().equals("")) {
-                   Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
+
+                if (p_text.getText().equals("")) {
+                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
                     fieldAlert.setContentText("Fill all the fields");
                     fieldAlert.show();
 
-                } else {
+                } else if (product.isExists(p_text.getText(), productsFile) == true) {
                     product.deletProductByName(p_text.getText(), productsFile);
                     Alert delAlert = new Alert(Alert.AlertType.INFORMATION);
                     delAlert.setContentText("Item Deleted Successfully!");
                     delAlert.show();
                     p_text.clear();
                     price_text.clear();
+                } else {
+                    Alert productexist = new Alert(AlertType.ERROR);
+                    productexist.setContentText("Product does not exist");
+                    productexist.show();
+                }
             }
-        }
         });
 
         update_btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                if (p_text.getText().equals("") || price_text.getText().equals("")) {                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
+                if (p_text.getText().equals("") || price_text.getText().equals("")) {
+                    Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
                     fieldAlert.setContentText("Fill all the fields");
                     fieldAlert.show();
-                } else {
+                } else if(product.isExists(p_text.getText(), productsFile) == true) {
                     product.updateProduct(p_text.getText(), addProductDetails().toString(), productsFile);
                     Alert updateAlert = new Alert(Alert.AlertType.INFORMATION);
                     updateAlert.setContentText("Item Updated Successfully!");
                     updateAlert.show();
                     p_text.clear();
                     price_text.clear();
+                }else {
+                    Alert productexist = new Alert(AlertType.ERROR);
+                    productexist.setContentText("Product does not exist");
+                    productexist.show();
                 }
             }
 
