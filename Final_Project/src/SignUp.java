@@ -39,6 +39,16 @@ public class SignUp extends Application {
     DatePicker dobDatePicker;
     PasswordField passwordField, confirmPassField;
 
+    public boolean chkRadioBtn(){
+        if(maleRadioButton.isSelected()){
+            return true;
+        }else if(femaleRadioButton.isSelected()){
+            return true;
+        }
+        else 
+        return false;
+    }
+
     public User getUserDetails() {
         userData.setFirstName(firstnameField.getText());
         if (maleRadioButton.isSelected()) {
@@ -211,15 +221,23 @@ public class SignUp extends Application {
                 // Filing fileWrite = new Filing();
                 // System.out.println(fileWrite.readData("signup.txt"));
                 // fileWrite.writeData(getUserDetails(), "signup.txt");
-                Authentication auth = new Authentication();
-                confirm = auth.signUp(getUserDetails());
-                if (confirm == false) {
-                    HomePage home = new HomePage();
-                    try {
-                        home.start(signUpstage);
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                if (firstnameField.getText().equals("") || emailField.getText().equals("")
+                        || dobDatePicker.getValue().equals("") || passwordField.getText().equals("")
+                        || confirmPassField.getText().equals("") || chkRadioBtn() == false) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Please fill all the fields");
+                    alert.show();
+                } else {
+                    Authentication auth = new Authentication();
+                    confirm = auth.signUp(getUserDetails());
+                    if (confirm == false) {
+                        HomePage home = new HomePage();
+                        try {
+                            home.start(signUpstage);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

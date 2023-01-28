@@ -2,6 +2,15 @@
 public class Products {
 	String productName, productPrice;
 
+	Products(String pName, String pPrice) {
+		productName = pName;
+		productPrice = pPrice;
+	}
+
+	Products() {
+
+	}
+
 	public void setProductName(String param) {
 		this.productName = param;
 	}
@@ -17,7 +26,7 @@ public class Products {
 	public String getProductPrice() {
 		return this.productPrice;
 	}
-    
+
 	public String toString() {
 		return this.productName + "," + this.productPrice;
 	}

@@ -1,2 +1,3 @@
 biryani,150
-dosa,50
+dosa,100
+chicken,800

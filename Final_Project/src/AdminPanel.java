@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import javax.lang.model.util.ElementScanner6;
@@ -122,24 +124,37 @@ public class AdminPanel extends Application {
         dlt_btn.setOnMouseEntered(e -> dlt_btn.setEffect(new DropShadow()));
         dlt_btn.setOnMouseExited(e -> dlt_btn.setEffect(null));
 
-        TableView menu_items = new TableView<>();
+        TableView<Products> menu_items = new TableView<>();
+        // adding items to table view
+        TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        menu_items.setEditable(false);
+        menu_items.getColumns().add(itemNameColumn);
 
-        // TableColumn itemNameColumn = new TableColumn<>("Product Name");
-        // itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        // menu_items.setEditable(true);
-        // // menu_items.getColumns().add(itemNameColumn);
-
-        // TableColumn itemPriceColumn = new TableColumn<>("Product price");
-        // itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        // menu_items.setEditable(true);
-        // // menu_items.getColumns().add(itemPriceColumn);
+        TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
+        itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        menu_items.setEditable(false);
+        menu_items.getColumns().add(itemPriceColumn);
         // ArrayList<String> arrlist = new ArrayList<String>();
         // arrlist = product.readData("products.txt");
-        // ObservableList<String> oListStavaka =
-        // FXCollections.observableArrayList(arrlist);
+        ObservableList<Products> oListStavaka = FXCollections.observableArrayList();
         // menu_items.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         // menu_items.setItems(oListStavaka);
+        try {
+            BufferedReader reader;
+            reader = new BufferedReader(new FileReader(productsFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                oListStavaka.add(new Products(parts[0], parts[1]));
+            }
 
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        menu_items.setItems(oListStavaka);
+        System.out.println(oListStavaka);
         // menu_items.getColumns().addAll(itemNameColumn,itemPriceColumn);
 
         // Separator sep =new Separator(Orientation.VERTICAL);
@@ -263,14 +278,14 @@ public class AdminPanel extends Application {
                     Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
                     fieldAlert.setContentText("Fill all the fields");
                     fieldAlert.show();
-                } else if(product.isExists(p_text.getText(), productsFile) == true) {
+                } else if (product.isExists(p_text.getText(), productsFile) == true) {
                     product.updateProduct(p_text.getText(), addProductDetails().toString(), productsFile);
                     Alert updateAlert = new Alert(Alert.AlertType.INFORMATION);
                     updateAlert.setContentText("Item Updated Successfully!");
                     updateAlert.show();
                     p_text.clear();
                     price_text.clear();
-                }else {
+                } else {
                     Alert productexist = new Alert(AlertType.ERROR);
                     productexist.setContentText("Product does not exist");
                     productexist.show();
