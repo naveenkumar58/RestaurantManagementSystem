@@ -3,8 +3,8 @@ public class Products {
 	String productName, productPrice;
 
 	Products(String pName, String pPrice) {
-		productName = pName;
-		productPrice = pPrice;
+		this.productName = pName;
+		this.productPrice = pPrice;
 	}
 
 	Products() {
@@ -15,7 +15,7 @@ public class Products {
 		this.productName = param;
 	}
 
-	public String getProdctName() {
+	public String getProductName() {
 		return this.productName;
 	}
 

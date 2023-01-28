@@ -39,6 +39,37 @@ public class AdminPanel extends Application {
     TextField p_text, price_text;
     String productsFile = "products.txt";
     Filing product;
+    ObservableList<Products> oListStavaka;
+    TableView<Products> menu_items;
+
+    public void addProducts(){
+        menu_items = new TableView<>();
+        // adding items to table view
+        TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+
+        TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
+        itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+
+        oListStavaka = FXCollections.observableArrayList();
+
+        try {
+            BufferedReader reader;
+            reader = new BufferedReader(new FileReader(productsFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                oListStavaka.add(new Products(parts[0], parts[1]));
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        menu_items.setItems(oListStavaka);
+        menu_items.getColumns().addAll(itemNameColumn, itemPriceColumn);
+    }
 
     public void CheckproductExist() {
         if (product.isExists(p_text.getText(), productsFile)) {
@@ -51,6 +82,7 @@ public class AdminPanel extends Application {
             Alert addAlert = new Alert(Alert.AlertType.INFORMATION);
             addAlert.setContentText("Item Added Successfully!");
             addAlert.show();
+            oListStavaka.add(new Products(p_text.getText(), price_text.getText()));
             p_text.clear();
             price_text.clear();
         }
@@ -123,42 +155,9 @@ public class AdminPanel extends Application {
         // dlt_btn.setPrefWidth(80);
         dlt_btn.setOnMouseEntered(e -> dlt_btn.setEffect(new DropShadow()));
         dlt_btn.setOnMouseExited(e -> dlt_btn.setEffect(null));
-
-        TableView<Products> menu_items = new TableView<>();
-        // adding items to table view
-        TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
-        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        menu_items.setEditable(false);
-        menu_items.getColumns().add(itemNameColumn);
-
-        TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
-        itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        menu_items.setEditable(false);
-        menu_items.getColumns().add(itemPriceColumn);
-        // ArrayList<String> arrlist = new ArrayList<String>();
-        // arrlist = product.readData("products.txt");
-        ObservableList<Products> oListStavaka = FXCollections.observableArrayList();
-        // menu_items.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        // menu_items.setItems(oListStavaka);
-        try {
-            BufferedReader reader;
-            reader = new BufferedReader(new FileReader(productsFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                oListStavaka.add(new Products(parts[0], parts[1]));
-            }
-
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        menu_items.setItems(oListStavaka);
-        System.out.println(oListStavaka);
-        // menu_items.getColumns().addAll(itemNameColumn,itemPriceColumn);
-
-        // Separator sep =new Separator(Orientation.VERTICAL);
-        // sep.minHeight(600);
+        // 
+        addProducts();
+        
         Separator sep2 = new Separator(Orientation.VERTICAL);
         sep2.setMinHeight(600);
 
@@ -174,19 +173,12 @@ public class AdminPanel extends Application {
         AnchorPane.setTopAnchor(left_pane, 0.0);
 
         AnchorPane.setLeftAnchor(imageView, 50.0);
-        // AnchorPane.setRightAnchor(imageView, 600.0);
         AnchorPane.setBottomAnchor(imageView, 50.0);
         AnchorPane.setTopAnchor(imageView, 20.0);
 
         AnchorPane.setLeftAnchor(adminLabel, 50.0);
-        // AnchorPane.setRightAnchor(adminLabel, 600.0);
         AnchorPane.setBottomAnchor(adminLabel, 420.0);
         AnchorPane.setTopAnchor(adminLabel, 120.0);
-
-        // AnchorPane.setLeftAnchor(sep, 201.0);
-        // AnchorPane.setRightAnchor(sep, 600.0);
-        // AnchorPane.setBottomAnchor(sep, 0.0);
-        // AnchorPane.setTopAnchor(sep, 0.0);
 
         AnchorPane.setLeftAnchor(sep2, 501.0);
         AnchorPane.setRightAnchor(sep2, 300.0);
@@ -239,6 +231,7 @@ public class AdminPanel extends Application {
                     fieldAlert.show();
                 } else {
                     CheckproductExist();
+
                 }
             }
 
@@ -248,7 +241,6 @@ public class AdminPanel extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                // System.out.println("Love: "+ p_text.getclass);
 
                 if (p_text.getText().equals("")) {
                     Alert fieldAlert = new Alert(Alert.AlertType.ERROR);
