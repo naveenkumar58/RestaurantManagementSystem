@@ -1,7 +1,5 @@
 biryani,150
 dosa,100
 chicken,800
-test,50
-naveen,100
 burger,1000
 pasta,1500

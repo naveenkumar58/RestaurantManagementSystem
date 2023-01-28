@@ -42,7 +42,7 @@ public class AdminPanel extends Application {
     ObservableList<Products> oListStavaka;
     TableView<Products> menu_items;
 
-    public void addProducts(){
+    public void addProducts() {
         menu_items = new TableView<>();
         // adding items to table view
         TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
@@ -155,9 +155,9 @@ public class AdminPanel extends Application {
         // dlt_btn.setPrefWidth(80);
         dlt_btn.setOnMouseEntered(e -> dlt_btn.setEffect(new DropShadow()));
         dlt_btn.setOnMouseExited(e -> dlt_btn.setEffect(null));
-        // 
+        //
         addProducts();
-        
+
         Separator sep2 = new Separator(Orientation.VERTICAL);
         sep2.setMinHeight(600);
 

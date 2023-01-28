@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,7 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,11 +32,183 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.PopupWindow.AnchorLocation;
+import javafx.util.Callback;
 
 public class Cart extends Application {
 
     Stage cartPage;
     Scene CartPageScene;
+    TableView<Products> cartTable;
+    String productsFile = "Cart.txt";
+    Menu cart;
+    ObservableList<Products> itemsList;
+    Integer total = 0;
+    Products products;
+    Label price;
+
+    // public void selectedItems(){
+    // cart=new Menu();
+    // cartTable = new TableView<>();
+    // // adding items to table view
+    // TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product
+    // Name");
+    // itemNameColumn.setCellValueFactory(new
+    // PropertyValueFactory<>("productName"));
+
+    // TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product
+    // price");
+    // itemPriceColumn.setCellValueFactory(new
+    // PropertyValueFactory<>("productPrice"));
+
+    // TableColumn<Products, Integer> qty = new TableColumn<>("Product quantity");
+    // itemPriceColumn.setCellValueFactory(new
+    // PropertyValueFactory<>("productQty"));
+    // itemsList = FXCollections.observableArrayList();
+
+    // System.out.println("Love: "+ Menu.test());
+    // try {
+    // // BufferedReader reader;
+    // // reader = new BufferedReader(new FileReader(productsFile));
+    // // String line;
+    // for (String line : cart.test()) {
+    // // System.out.println("Love: "+line,cart.cartItems);
+    // String[] parts = line.split(",");
+    // itemsList.add(new Products(parts[0], parts[1]));
+    // }
+
+    // // reader.close();
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+
+    // cartTable.setItems(itemsList);
+    // cartTable.getColumns().addAll(itemNameColumn, itemPriceColumn,qty);
+    // }
+    public Products addProductDetails(String pname, String pprice, Integer pqty) {
+        System.out.println("LLOOO: "+ pname + pprice + pqty);
+        products.setProductName(pname);
+        products.setProductPrice(pprice);
+        products.setProductQty(pqty);
+        return products;
+    }
+
+    public void items() {
+        cartTable = new TableView<>();
+        // adding items to table view
+        TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+
+        TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
+        itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+
+        TableColumn<Products, String> itemQtyColumn = new TableColumn<>("Product Quantity");
+        itemQtyColumn.setCellValueFactory(new PropertyValueFactory<>("productQty"));
+
+        TableColumn plus = new TableColumn("");
+        plus.setCellValueFactory(new PropertyValueFactory<>("plus"));
+
+        TableColumn minus = new TableColumn("");
+        minus.setCellValueFactory(new PropertyValueFactory<>("minus"));
+
+        Callback<TableColumn<Products, String>, TableCell<Products, String>> cellPlusFactory = //
+                new Callback<TableColumn<Products, String>, TableCell<Products, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Products, String> param) {
+                        final TableCell<Products, String> cell = new TableCell<Products, String>() {
+
+                            final Button btn = new Button("+");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Products productstemp = getTableView().getItems().get(getIndex());
+                                        Filing file = new Filing();
+                                        Integer qtyTemp = productstemp.getProductQty() + 1;
+                                        // total = total + (Integer.valueOf(productstemp.getProductPrice()) * qtyTemp);
+                                        productstemp.setProductQty(qtyTemp);
+                                        file.updateProduct(productstemp.getProductName(), 
+                                        productstemp.toString(), 
+                                        "Cart.txt");
+                                        total = total + (Integer.valueOf(productstemp.getProductPrice()) * 1);
+                                        cartTable.refresh();
+                                        price.setText(total.toString());
+                                        // System.out.println(productstemp.getProductName()
+                                        //         + "   " + productstemp.getProductPrice() + " " + productstemp.getProductQty());
+                                        
+                                        
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        Callback<TableColumn<Products, String>, TableCell<Products, String>> cellMinusFactory = //
+                new Callback<TableColumn<Products, String>, TableCell<Products, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Products, String> param) {
+                        final TableCell<Products, String> cell = new TableCell<Products, String>() {
+
+                            final Button btn = new Button("-");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        Products productstemp = getTableView().getItems().get(getIndex());
+                                        Filing file = new Filing();
+                                        Integer qtyTemp = productstemp.getProductQty() - 1;
+                                        // total = total + (Integer.valueOf(productstemp.getProductPrice()) * qtyTemp);
+                                        productstemp.setProductQty(qtyTemp);
+                                        file.updateProduct(productstemp.getProductName(), productstemp.toString(), "Cart.txt");
+                                        total = total - Integer.valueOf(productstemp.getProductPrice());
+                                        cartTable.refresh();
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        plus.setCellFactory(cellPlusFactory);
+        minus.setCellFactory(cellMinusFactory);
+
+        itemsList = FXCollections.observableArrayList();
+
+        try {
+            BufferedReader reader;
+            reader = new BufferedReader(new FileReader(productsFile));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                total = total + (Integer.valueOf(parts[1]) * Integer.valueOf(parts[2]));
+                itemsList.add(new Products(parts[0], parts[1], Integer.valueOf(parts[2]) ));
+            }
+
+            reader.close();
+            System.out.println("totla: " + total);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cartTable.setItems(itemsList);
+        cartTable.getColumns().addAll(itemNameColumn, itemPriceColumn, itemQtyColumn, plus, minus);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -39,7 +219,9 @@ public class Cart extends Application {
 
         Text cartLabel = new Text("CART");
         cartLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        cartLabel.setFill(Color.web("#686BFF",1));
+        cartLabel.setFill(Color.web("#686BFF", 1));
+
+        items();
 
         // HOME BUTTON
         Image home = new Image("images/home.png");
@@ -117,12 +299,6 @@ public class Cart extends Application {
         clearAllBut.setOnMouseEntered(e -> clearAllBut.setEffect(new DropShadow()));
         clearAllBut.setOnMouseExited(e -> clearAllBut.setEffect(null));
 
-        // VBox root = new VBox();
-        // root.setPadding(new Insets(10));
-        // root.setSpacing(10);
-        // root.setAlignment(Pos.CENTER);
-        // root.getChildren().addAll(clearAllBut);
-
         // CLEAR BUTTON
         Button clearBut = new Button("Clear");
         clearBut.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
@@ -131,12 +307,6 @@ public class Cart extends Application {
         // clearBut.setPrefWidth(80);
         clearBut.setOnMouseEntered(e -> clearBut.setEffect(new DropShadow()));
         clearBut.setOnMouseExited(e -> clearBut.setEffect(null));
-
-        // VBox root2 = new VBox();
-        // root2.setPadding(new Insets(10));
-        // root2.setSpacing(10);
-        // root2.setAlignment(Pos.CENTER);
-        // root2.getChildren().addAll(clearBut, cartLabel);
 
         // PLACE ORDER BUTTON
         Button placeOrderButton = new Button("Place Order");
@@ -147,52 +317,21 @@ public class Cart extends Application {
         placeOrderButton.setOnMouseEntered(e -> placeOrderButton.setEffect(new DropShadow()));
         placeOrderButton.setOnMouseExited(e -> placeOrderButton.setEffect(null));
 
-        // VBox root3 = new VBox();
-        // root3.setPadding(new Insets(10));
-        // root3.setSpacing(10);
-        // root3.setAlignment(Pos.CENTER);
-        // root3.getChildren().addAll(placeOrderButton);
-
         // TOTAL LABEL
         Label paymentLabel = new Label("GRAND TOTAL");
         paymentLabel.setFont(Font.font(null, FontWeight.BOLD, 16));
 
-        TableView cartTable = new TableView<>();
-        // cartTable.setEditable(true);
-        // TableView<String> itemNameColumn = new TableView<>();
-        // cartTable.getColumns().add(itemNameColumn);
-        // TableView<String> costColumn = new TableView<>();
-        // TableView<String> quantityColumn = new TableView<>();
-        // TableView addColumn = new TableView<>();
-        // TableView substractColumn = new TableView<>();
-        // TableColumn<String> itemNameColumn = new TableColumn("Item Name");
-        // itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("itemname"));
-        // TableColumn<String> costColumn = new TableColumn("Cost");
-        // costColumn.setCellValueFactory(new PropertyValueFactory<>("cost"));
-        // TableColumn< String> quantityColumn = new TableColumn("Quantity");
-        // quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        // TableColumn<String> addColumn = new TableColumn("");
-        // addColumn.setCellValueFactory(new PropertyValueFactory<>(""));
-        // TableColumn<String> substractColumn = new TableColumn("");
-        // substractColumn.setCellValueFactory(new PropertyValueFactory<>(""));
-        // cartTable.getColumns().addAll(itemNameColumn,costColumn,quantityColumn,addColumn,substractColumn);
+        
+        price = new Label(total.toString());
+        price.setFont(Font.font(null, FontWeight.BOLD, 16));
 
-        // GridPane homeGrid = new GridPane();
-        // ScrollPane scroll = new ScrollPane();
-        // Pane sidePane = new Pane();
-        // sidePane.setPrefSize(200, 600);
         AnchorPane leftPane = new AnchorPane(separator, menuButton, cartButton, homeButton, logOutButton,
                 tableResButton);
         AnchorPane rightPane = new AnchorPane(cartTable, clearAllBut, clearBut, placeOrderButton,
-                paymentLabel, cartLabel);
+                paymentLabel, cartLabel, price);
         leftPane.setStyle("-fx-background-color: #686BFF;");
         AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
 
-        // AnchorPane.setRightAnchor(sidePane, 400.0);
-        // sidePane.setBackground(new Background(new BackgroundFill(Color.RED,
-        // CornerRadii.EMPTY, Insets.EMPTY)));
-
-       
         AnchorPane.setLeftAnchor(leftPane, 0.0);
         AnchorPane.setRightAnchor(leftPane, 600.0);
         AnchorPane.setBottomAnchor(leftPane, 0.0);
@@ -249,7 +388,9 @@ public class Cart extends Application {
         AnchorPane.setTopAnchor(paymentLabel, 530.0);
         AnchorPane.setBottomAnchor(paymentLabel, 70.0);
 
-        // scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+        AnchorPane.setLeftAnchor(price, 520.0);
+        AnchorPane.setTopAnchor(price, 530.0);
+        AnchorPane.setBottomAnchor(price, 70.0);
 
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -334,7 +475,6 @@ public class Cart extends Application {
             }
 
         });
-
 
         CartPageScene = new Scene(a1, 800, 600);
         cartPage.setResizable(false);

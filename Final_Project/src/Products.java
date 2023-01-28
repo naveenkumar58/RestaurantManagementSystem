@@ -1,14 +1,28 @@
 
 public class Products {
 	String productName, productPrice;
+	Integer productQty;
 
 	Products(String pName, String pPrice) {
 		this.productName = pName;
 		this.productPrice = pPrice;
 	}
 
-	Products() {
+	Products(String pName, String pPrice, Integer pQty) {
+		this.productName = pName;
+		this.productPrice = pPrice;
+		this.productQty = pQty;
+	}
 
+	Products() {
+	}
+
+	public Integer getProductQty() {
+		return productQty;
+	}
+
+	public void setProductQty(Integer productQty) {
+		this.productQty = productQty;
 	}
 
 	public void setProductName(String param) {
@@ -28,6 +42,6 @@ public class Products {
 	}
 
 	public String toString() {
-		return this.productName + "," + this.productPrice;
+		return this.productName + "," + this.productPrice + "," + this.productQty;
 	}
 }

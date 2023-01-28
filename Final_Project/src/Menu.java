@@ -1,4 +1,11 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,6 +19,9 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
@@ -31,9 +41,43 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Menu extends Application {
-    
+
     Stage menuPage;
     Scene menuPagScene;
+    String productsFile = "Products.txt";
+    ObservableList<Products> itemsList;
+    TableView<Products> itemTable;
+    static ObservableList<String> cartItems;
+    String cartFile = "Cart.txt";
+
+    public void items() {
+        itemTable = new TableView<>();
+        // adding items to table view
+        TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+
+        TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
+        itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+
+        itemsList = FXCollections.observableArrayList();
+
+        try {
+            BufferedReader reader;
+            reader = new BufferedReader(new FileReader(productsFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                itemsList.add(new Products(parts[0], parts[1],1));
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        itemTable.setItems(itemsList);
+        itemTable.getColumns().addAll(itemNameColumn, itemPriceColumn);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -44,7 +88,7 @@ public class Menu extends Application {
 
         Text label = new Text("Menu");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        label.setFill(Color.web("#686BFF",1));
+        label.setFill(Color.web("#686BFF", 1));
 
         // HOME BUTTON
         Image home = new Image("images/home.png");
@@ -113,11 +157,42 @@ public class Menu extends Application {
         logOutButton.setTextFill(Color.WHITE);
         logOutButton.setCursor(Cursor.HAND);
 
+        // Add to cart button
+        Button addToCart = new Button("Add to Cart");
+
+        AnchorPane.setLeftAnchor(addToCart, 400.0);
+        AnchorPane.setRightAnchor(addToCart, 150.0);
+        AnchorPane.setBottomAnchor(addToCart, 50.0);
+        AnchorPane.setTopAnchor(addToCart, 490.0);
+        // ObservableList carts = FXCollections.observableArrayList();
+        cartItems = FXCollections.observableArrayList();
+        addToCart.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Filing fl = new Filing();
+                // cartItems.add(itemTable.getSelectionModel().getSelectedItems().get(0).toString());
+                String cart = itemTable.getSelectionModel().getSelectedItems().get(0).toString();
+                fl.writeData(cart, cartFile);
+                // cartItems.add(itemTable.getSelectionModel().getSelectedItems());
+                System.out.println(cartItems);
+            }
+
+        });
+
+        // Adding Table of items
+        this.items();
+
         AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
         leftPane.setStyle("-fx-background-color: #686BFF;");
-        AnchorPane rightPane = new AnchorPane(label);
+        AnchorPane rightPane = new AnchorPane(label, itemTable, addToCart);
         AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
+
+        AnchorPane.setLeftAnchor(itemTable, 0.0);
+        AnchorPane.setRightAnchor(itemTable, 0.0);
+        AnchorPane.setBottomAnchor(itemTable, 100.0);
+        AnchorPane.setTopAnchor(itemTable, 100.0);
 
         AnchorPane.setLeftAnchor(leftPane, 0.0);
         AnchorPane.setRightAnchor(leftPane, 600.0);
@@ -239,5 +314,9 @@ public class Menu extends Application {
         menuPage.setResizable(false);
         menuPage.setScene(menuPagScene);
         menuPage.show();
+    }
+
+    public static ObservableList<String> test() {
+        return cartItems;
     }
 }
