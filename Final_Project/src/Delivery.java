@@ -31,7 +31,7 @@ public class Delivery extends Application {
             @Override
             public void handle(ActionEvent event) {
                 fl = new Filing();
-                if (addLabel.getText().equals("")) {
+                if (address.getText().equals("")) {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setContentText("Please fill the fields");
                     alert.show();
