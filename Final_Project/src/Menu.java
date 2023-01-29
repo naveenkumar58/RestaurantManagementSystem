@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -21,6 +22,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Shadow;
@@ -67,7 +69,7 @@ public class Menu extends Application {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                itemsList.add(new Products(parts[0], parts[1],1));
+                itemsList.add(new Products(parts[0], parts[1], 1));
             }
 
             reader.close();
@@ -164,24 +166,28 @@ public class Menu extends Application {
         AnchorPane.setRightAnchor(addToCart, 150.0);
         AnchorPane.setBottomAnchor(addToCart, 50.0);
         AnchorPane.setTopAnchor(addToCart, 490.0);
-        // ObservableList carts = FXCollections.observableArrayList();
         cartItems = FXCollections.observableArrayList();
         addToCart.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
                 Filing fl = new Filing();
-                // cartItems.add(itemTable.getSelectionModel().getSelectedItems().get(0).toString());
                 String cart = itemTable.getSelectionModel().getSelectedItems().get(0).toString();
-                fl.writeData(cart, cartFile);
-                // cartItems.add(itemTable.getSelectionModel().getSelectedItems());
-                System.out.println(cartItems);
+                if (fl.isExists(cart, cartFile)) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Product already added");
+                    alert.show();
+                } else {
+                    fl.writeData(cart, cartFile);
+                }
+
             }
 
         });
 
         // Adding Table of items
         this.items();
+        itemTable.refresh();
 
         AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
@@ -314,9 +320,5 @@ public class Menu extends Application {
         menuPage.setResizable(false);
         menuPage.setScene(menuPagScene);
         menuPage.show();
-    }
-
-    public static ObservableList<String> test() {
-        return cartItems;
     }
 }

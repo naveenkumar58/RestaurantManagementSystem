@@ -1,11 +1,14 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.lang.model.util.ElementScanner6;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,8 +42,8 @@ public class AdminPanel extends Application {
     TextField p_text, price_text;
     String productsFile = "products.txt";
     Filing product;
-    ObservableList<Products> oListStavaka;
-    TableView<Products> menu_items;
+    ObservableList<Products> itemList;
+    public static TableView<Products> menu_items;
 
     public void addProducts() {
         menu_items = new TableView<>();
@@ -51,7 +54,7 @@ public class AdminPanel extends Application {
         TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
         itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
 
-        oListStavaka = FXCollections.observableArrayList();
+        itemList = FXCollections.observableArrayList();
 
         try {
             BufferedReader reader;
@@ -59,7 +62,7 @@ public class AdminPanel extends Application {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                oListStavaka.add(new Products(parts[0], parts[1]));
+                itemList.add(new Products(parts[0], parts[1]));
             }
 
             reader.close();
@@ -67,7 +70,7 @@ public class AdminPanel extends Application {
             e.printStackTrace();
         }
 
-        menu_items.setItems(oListStavaka);
+        menu_items.setItems(itemList);
         menu_items.getColumns().addAll(itemNameColumn, itemPriceColumn);
     }
 
@@ -82,7 +85,7 @@ public class AdminPanel extends Application {
             Alert addAlert = new Alert(Alert.AlertType.INFORMATION);
             addAlert.setContentText("Item Added Successfully!");
             addAlert.show();
-            oListStavaka.add(new Products(p_text.getText(), price_text.getText()));
+            itemList.add(new Products(p_text.getText(), price_text.getText()));
             p_text.clear();
             price_text.clear();
         }
@@ -249,11 +252,20 @@ public class AdminPanel extends Application {
 
                 } else if (product.isExists(p_text.getText(), productsFile) == true) {
                     product.deletProductByName(p_text.getText(), productsFile);
+
                     Alert delAlert = new Alert(Alert.AlertType.INFORMATION);
                     delAlert.setContentText("Item Deleted Successfully!");
+
                     delAlert.show();
                     p_text.clear();
                     price_text.clear();
+                    try {
+                        start(adminStage);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
                 } else {
                     Alert productexist = new Alert(AlertType.ERROR);
                     productexist.setContentText("Product does not exist");
@@ -277,6 +289,13 @@ public class AdminPanel extends Application {
                     updateAlert.show();
                     p_text.clear();
                     price_text.clear();
+                    try {
+                        start(adminStage);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
                 } else {
                     Alert productexist = new Alert(AlertType.ERROR);
                     productexist.setContentText("Product does not exist");

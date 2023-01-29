@@ -9,14 +9,8 @@ import java.util.HashMap;
 
 public class Filing {
 
-	// HashMap<Integer, String> userDetails = new HashMap<>();// columnMap
 	Filing() {
-		// userDetails.put(0, "fName");
-		// userDetails.put(1, "lName");
-		// userDetails.put(2, "gender");
-		// userDetails.put(3, "date");
-		// userDetails.put(4, "email");
-		// userDetails.put(5, "password");
+		
 	}
 
 	public void writeData(String data, String fileName) {
@@ -52,6 +46,7 @@ public class Filing {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void deleteProductFile(String fileName) {
 		try {
@@ -88,10 +83,10 @@ public class Filing {
 				this.addProducts(product, fileName);
 			} else {
 				this.addProducts(p, fileName);
-				// success = true;
+				
 			}
 		}
-		// return success;
+		
 	}
 
 	// Product End
@@ -105,15 +100,10 @@ public class Filing {
 			try {
 				line = reader.readLine();
 				while (line != null) {
-					// System.out.println(line);
-					// read next line
+
 					arrayList.add(line);
 					line = reader.readLine();
-					// for(int i=0;i<((CharSequence) arrayList).length();i++) {
-					// String lineInfo = arrayList.get(i);
-					// String[] columns=lineInfo.split(",") ;
-					// columns[4]==email;
-					// }
+
 				}
 				reader.close();
 				// return arrayList;

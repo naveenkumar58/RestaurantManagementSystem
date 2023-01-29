@@ -1,5 +1,2 @@
-biryani,150
-dosa,100
-chicken,800
-burger,1000
-pasta,1500
+pasta,1000,null
+burger,500,null

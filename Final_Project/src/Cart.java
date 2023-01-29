@@ -1,5 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -11,13 +15,18 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -30,6 +39,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Callback;
@@ -46,50 +56,52 @@ public class Cart extends Application {
     Products products;
     Label price;
 
-    // public void selectedItems(){
-    // cart=new Menu();
-    // cartTable = new TableView<>();
-    // // adding items to table view
-    // TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product
-    // Name");
-    // itemNameColumn.setCellValueFactory(new
-    // PropertyValueFactory<>("productName"));
-
-    // TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product
-    // price");
-    // itemPriceColumn.setCellValueFactory(new
-    // PropertyValueFactory<>("productPrice"));
-
-    // TableColumn<Products, Integer> qty = new TableColumn<>("Product quantity");
-    // itemPriceColumn.setCellValueFactory(new
-    // PropertyValueFactory<>("productQty"));
-    // itemsList = FXCollections.observableArrayList();
-
-    // System.out.println("Love: "+ Menu.test());
-    // try {
-    // // BufferedReader reader;
-    // // reader = new BufferedReader(new FileReader(productsFile));
-    // // String line;
-    // for (String line : cart.test()) {
-    // // System.out.println("Love: "+line,cart.cartItems);
-    // String[] parts = line.split(",");
-    // itemsList.add(new Products(parts[0], parts[1]));
-    // }
-
-    // // reader.close();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-
-    // cartTable.setItems(itemsList);
-    // cartTable.getColumns().addAll(itemNameColumn, itemPriceColumn,qty);
-    // }
     public Products addProductDetails(String pname, String pprice, Integer pqty) {
-        System.out.println("LLOOO: "+ pname + pprice + pqty);
         products.setProductName(pname);
         products.setProductPrice(pprice);
         products.setProductQty(pqty);
         return products;
+    }
+
+    public void delivery() {
+        Filing fl = new Filing();
+        Dialog<ButtonType> dialog = new Dialog<>();
+        ButtonType type = new ButtonType("Delivery", ButtonData.OTHER);
+        ButtonType type2 = new ButtonType("Take Away", ButtonData.OTHER);
+        // Setting the content of the dialog
+        dialog.setContentText("Delivery or Take Away?");
+        // Adding buttons to the dialog pane
+        dialog.getDialogPane().getButtonTypes().addAll(type, type2);
+        dialog.showAndWait().ifPresent(response -> {
+            if (response == type) {
+                Delivery del = new Delivery();
+                fl.deleteProductFile(productsFile);
+                total = 0;
+                try {
+                    start(cartPage);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                try {
+                    del.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                fl.deleteProductFile(productsFile);
+                total = 0;
+                try {
+                    start(cartPage);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setContentText("Your Order Has Been Placed!");
+                alert.show();
+            }
+        });
     }
 
     public void items() {
@@ -131,16 +143,13 @@ public class Cart extends Application {
                                         Integer qtyTemp = productstemp.getProductQty() + 1;
                                         // total = total + (Integer.valueOf(productstemp.getProductPrice()) * qtyTemp);
                                         productstemp.setProductQty(qtyTemp);
-                                        file.updateProduct(productstemp.getProductName(), 
-                                        productstemp.toString(), 
-                                        "Cart.txt");
+                                        file.updateProduct(productstemp.getProductName(),
+                                                productstemp.toString(),
+                                                "Cart.txt");
                                         total = total + (Integer.valueOf(productstemp.getProductPrice()) * 1);
                                         cartTable.refresh();
                                         price.setText(total.toString());
-                                        // System.out.println(productstemp.getProductName()
-                                        //         + "   " + productstemp.getProductPrice() + " " + productstemp.getProductQty());
-                                        
-                                        
+
                                     });
                                     setGraphic(btn);
                                     setText(null);
@@ -151,39 +160,46 @@ public class Cart extends Application {
                     }
                 };
 
-        Callback<TableColumn<Products, String>, TableCell<Products, String>> cellMinusFactory = //
-                new Callback<TableColumn<Products, String>, TableCell<Products, String>>() {
+        Callback<TableColumn<Products, String>, TableCell<Products, String>> cellMinusFactory = new Callback<TableColumn<Products, String>, TableCell<Products, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Products, String> param) {
+                final TableCell<Products, String> cell = new TableCell<Products, String>() {
+
+                    final Button btn = new Button("-");
+
                     @Override
-                    public TableCell call(final TableColumn<Products, String> param) {
-                        final TableCell<Products, String> cell = new TableCell<Products, String>() {
-
-                            final Button btn = new Button("-");
-
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            btn.setOnAction(event -> {
+                                Products productstemp = getTableView().getItems().get(getIndex());
+                                Filing file = new Filing();
+                                if (productstemp.getProductQty() > 1) {
+                                    Integer qtyTemp = productstemp.getProductQty() - 1;
+                                    // total = total + (Integer.valueOf(productstemp.getProductPrice()) * qtyTemp);
+                                    productstemp.setProductQty(qtyTemp);
+                                    file.updateProduct(productstemp.getProductName(), productstemp.toString(),
+                                            "Cart.txt");
+                                    total = total - Integer.valueOf(productstemp.getProductPrice());
+                                    cartTable.refresh();
+                                    price.setText(total.toString());
                                 } else {
-                                    btn.setOnAction(event -> {
-                                        Products productstemp = getTableView().getItems().get(getIndex());
-                                        Filing file = new Filing();
-                                        Integer qtyTemp = productstemp.getProductQty() - 1;
-                                        // total = total + (Integer.valueOf(productstemp.getProductPrice()) * qtyTemp);
-                                        productstemp.setProductQty(qtyTemp);
-                                        file.updateProduct(productstemp.getProductName(), productstemp.toString(), "Cart.txt");
-                                        total = total - Integer.valueOf(productstemp.getProductPrice());
-                                        cartTable.refresh();
-                                    });
-                                    setGraphic(btn);
-                                    setText(null);
+                                    Alert alert = new Alert(AlertType.ERROR);
+                                    alert.setContentText("Quantity cannot be less than 1");
+                                    alert.show();
                                 }
-                            }
-                        };
-                        return cell;
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
         plus.setCellFactory(cellPlusFactory);
         minus.setCellFactory(cellMinusFactory);
 
@@ -197,11 +213,11 @@ public class Cart extends Application {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 total = total + (Integer.valueOf(parts[1]) * Integer.valueOf(parts[2]));
-                itemsList.add(new Products(parts[0], parts[1], Integer.valueOf(parts[2]) ));
+                itemsList.add(new Products(parts[0], parts[1], Integer.valueOf(parts[2])));
             }
 
             reader.close();
-            System.out.println("totla: " + total);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -298,15 +314,52 @@ public class Cart extends Application {
         clearAllBut.setPrefWidth(80);
         clearAllBut.setOnMouseEntered(e -> clearAllBut.setEffect(new DropShadow()));
         clearAllBut.setOnMouseExited(e -> clearAllBut.setEffect(null));
+        clearAllBut.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                // TODO Auto-generated method stub
+                Filing f = new Filing();
+                f.deleteProductFile(productsFile);
+                try {
+                    start(cartPage);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                total = 0;
+                price.setText(total.toString());
+
+            }
+
+        });
 
         // CLEAR BUTTON
         Button clearBut = new Button("Clear");
         clearBut.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
         clearBut.setFont(Font.font(null, FontWeight.BOLD, 14));
         clearBut.setTextFill(Color.WHITE);
-        // clearBut.setPrefWidth(80);
         clearBut.setOnMouseEntered(e -> clearBut.setEffect(new DropShadow()));
         clearBut.setOnMouseExited(e -> clearBut.setEffect(null));
+        clearBut.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                // TODO Auto-generated method stub
+                Filing f = new Filing();
+                String item = cartTable.getSelectionModel().getSelectedItem().toString();
+                f.deletProductByName(item, productsFile);
+                total = 0;
+                try {
+                    start(cartPage);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
 
         // PLACE ORDER BUTTON
         Button placeOrderButton = new Button("Place Order");
@@ -316,12 +369,18 @@ public class Cart extends Application {
         placeOrderButton.setPrefWidth(80);
         placeOrderButton.setOnMouseEntered(e -> placeOrderButton.setEffect(new DropShadow()));
         placeOrderButton.setOnMouseExited(e -> placeOrderButton.setEffect(null));
+        placeOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                delivery();
+            }
+        });
 
         // TOTAL LABEL
         Label paymentLabel = new Label("GRAND TOTAL");
         paymentLabel.setFont(Font.font(null, FontWeight.BOLD, 16));
 
-        
         price = new Label(total.toString());
         price.setFont(Font.font(null, FontWeight.BOLD, 16));
 

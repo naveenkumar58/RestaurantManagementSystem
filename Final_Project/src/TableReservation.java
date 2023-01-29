@@ -6,12 +6,14 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,10 +27,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class TableReservation extends Application {
-    
+
     Stage TableReservation;
     Scene TableReservationScene;
-
+    Filing fl;
+    String file = "Table Reservation.txt";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -42,7 +45,7 @@ public class TableReservation extends Application {
 
         Text label = new Text("TABLE RESERVATION");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        label.setFill(Color.web("#686BFF",1));
+        label.setFill(Color.web("#686BFF", 1));
 
         // HOME BUTTON
         Image home = new Image("images/home.png");
@@ -117,8 +120,6 @@ public class TableReservation extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
- 
-
         Label nameLabel = new Label("Name:");
         nameLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
         nameLabel.setTextFill(Color.BLACK);
@@ -141,7 +142,7 @@ public class TableReservation extends Application {
         dateLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
         dateLabel.setTextFill(Color.BLACK);
         grid.add(dateLabel, 0, 3);
-        
+
         DatePicker datePicker = new DatePicker();
         grid.add(datePicker, 1, 3);
 
@@ -156,7 +157,7 @@ public class TableReservation extends Application {
         personsBox.setMaxWidth(250);
         personsBox.getItems().addAll("1", "3", "5", "7", "9", "12");
         grid.add(personsBox, 1, 4);
-   
+
         Button submitButton = new Button("Submit");
         submitButton.setMaxWidth(200);
         submitButton.setTextFill(Color.WHITE);
@@ -166,6 +167,29 @@ public class TableReservation extends Application {
         submitButton.setOnMouseExited(e -> submitButton.setEffect(null));
         submitButton.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
         grid.add(submitButton, 1, 5);
+
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                fl = new Filing();
+                if (nameField.getText().equals("") || phoneField.getText().equals("")
+                        || datePicker.getValue() == null || personsBox.getValue() == null) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Please Fill All The Fields");
+                    alert.show();
+                } else {
+                    String res = nameField.getText() + "," + phoneField.getText() + "," + datePicker.getValue() + ","
+                            + personsBox.getValue();
+                    fl.writeData(res, file);
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setContentText("Your table has been reserved");
+                    alert.show();
+                }
+
+            }
+
+        });
 
         AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
@@ -210,7 +234,6 @@ public class TableReservation extends Application {
         AnchorPane.setRightAnchor(grid, 30.0);
         AnchorPane.setTopAnchor(grid, 170.0);
 
-      
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

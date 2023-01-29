@@ -1,6 +1,0 @@
-pasta,1500,2
-pasta,1500,2
-burger,1000,1
-burger,1000,1
-biryani,150,1
-chicken,800,2
