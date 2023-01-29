@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 
 public class HomePage extends Application {
 
+
     Stage homePage;
     Scene homePageScene;
 
@@ -44,8 +45,7 @@ public class HomePage extends Application {
 
         Text label = new Text("RESTO");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        label.setFill(Color.web("#686BFF",1));
-
+        label.setFill(Color.web("#686BFF", 1));
 
         // HOME IMAGE
         Image image = new Image("images/restaurant.jpg");
@@ -56,7 +56,7 @@ public class HomePage extends Application {
         // Setting the image view parameters
         imageView.setX(10);
         imageView.setY(10);
-        imageView.setFitWidth(600);
+        imageView.setFitWidth(605);
         imageView.setPreserveRatio(true);
 
         // HOME BUTTON
@@ -125,11 +125,19 @@ public class HomePage extends Application {
         logOutButton.setStyle("-fx-background-color: transparent;");
         logOutButton.setTextFill(Color.WHITE);
         logOutButton.setCursor(Cursor.HAND);
-        
+
+        Button goToMenu = new Button("Go to Menu");
+        goToMenu.setStyle("-fx-background-color: #3f51b5; -fx-text-fill: white;");
+        goToMenu.setMinWidth(100);
+
+        Button goTOCart = new Button("Go to Cart");
+        goTOCart.setStyle("-fx-background-color: #ff5722; -fx-text-fill: white;");
+        goTOCart.setMinWidth(100);
+
         AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
         leftPane.setStyle("-fx-background-color: #686BFF;");
-        AnchorPane rightPane = new AnchorPane(label, imageView);
+        AnchorPane rightPane = new AnchorPane(label, imageView, goToMenu, goTOCart);
         AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
 
         AnchorPane.setLeftAnchor(leftPane, 0.0);
@@ -141,6 +149,17 @@ public class HomePage extends Application {
 
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
+
+        AnchorPane.setLeftAnchor(goTOCart, 160.0);
+        AnchorPane.setRightAnchor(goTOCart, 310.0);
+        AnchorPane.setTopAnchor(goTOCart, 540.0);
+        // AnchorPane.setBottomAnchor(goTOCart, 110.0);
+
+        AnchorPane.setLeftAnchor(goToMenu, 10.0);
+        AnchorPane.setRightAnchor(goToMenu, 450.0);
+        AnchorPane.setTopAnchor(goToMenu, 540.0);
+        // AnchorPane.setBottomAnchor(goToMenu, 110.0);
+        
 
         AnchorPane.setTopAnchor(homeButton, 40.0);
         AnchorPane.setLeftAnchor(homeButton, 10.0);
@@ -161,13 +180,13 @@ public class HomePage extends Application {
         AnchorPane.setTopAnchor(tableResButton, 230.0);
 
         AnchorPane.setLeftAnchor(label, 250.0);
-        AnchorPane.setTopAnchor(label, 40.0);
+        AnchorPane.setTopAnchor(label, 20.0);
         AnchorPane.setBottomAnchor(label, 400.0);
 
         AnchorPane.setLeftAnchor(imageView, 0.0);
         AnchorPane.setRightAnchor(imageView, 0.0);
-        AnchorPane.setTopAnchor(imageView, 100.0);
-        AnchorPane.setBottomAnchor(imageView, 400.0);
+        AnchorPane.setTopAnchor(imageView, 70.0);
+        AnchorPane.setBottomAnchor(imageView, 380.0);
 
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -177,6 +196,40 @@ public class HomePage extends Application {
 
                 try {
                     login.start(homePage);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        goToMenu.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Menu menu = new Menu();
+
+                try {
+                    menu.start(homePage);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        goTOCart.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Cart cart = new Cart();
+
+                try {
+                    cart.start(homePage);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -252,7 +305,7 @@ public class HomePage extends Application {
             }
 
         });
-      
+
         homePageScene = new Scene(a1, 800, 600);
         homePage.setTitle("Home Page");
         homePage.setResizable(false);

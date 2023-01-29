@@ -10,6 +10,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Delivery extends Application {
@@ -23,11 +26,16 @@ public class Delivery extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         Label addLabel = new Label("Address");
+        addLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
+        addLabel.setTextFill(Color.BLACK);
+        
         TextArea address = new TextArea();
 
         Button orderButton = new Button("Place Order");
+        orderButton.setStyle("-fx-background-color: #ff5722; -fx-text-fill: white;");
+        orderButton.setMinWidth(100);
         orderButton.setOnAction(new EventHandler<ActionEvent>() {
-
+           
             @Override
             public void handle(ActionEvent event) {
                 fl = new Filing();
@@ -37,6 +45,9 @@ public class Delivery extends Application {
                     alert.show();
                 } else {
                     fl.writeData(address.getText(), file);
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setContentText("Your order has been placed");
+                    alert.show();
                     stage.close();
                 }
 

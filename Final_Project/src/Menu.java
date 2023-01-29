@@ -161,11 +161,13 @@ public class Menu extends Application {
 
         // Add to cart button
         Button addToCart = new Button("Add to Cart");
+        addToCart.setStyle("-fx-background-color: #ff5722; -fx-text-fill: white; -fx-background-radius: 20;");
+        addToCart.setMinWidth(100);
 
         AnchorPane.setLeftAnchor(addToCart, 400.0);
-        AnchorPane.setRightAnchor(addToCart, 150.0);
+        // AnchorPane.setRightAnchor(addToCart, 150.0);
         AnchorPane.setBottomAnchor(addToCart, 50.0);
-        AnchorPane.setTopAnchor(addToCart, 490.0);
+        AnchorPane.setTopAnchor(addToCart, 510.0);
         cartItems = FXCollections.observableArrayList();
         addToCart.setOnAction(new EventHandler<ActionEvent>() {
 

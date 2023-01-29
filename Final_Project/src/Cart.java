@@ -64,6 +64,7 @@ public class Cart extends Application {
     }
 
     public void delivery() {
+       
         Filing fl = new Filing();
         Dialog<ButtonType> dialog = new Dialog<>();
         ButtonType type = new ButtonType("Delivery", ButtonData.OTHER);
@@ -71,6 +72,7 @@ public class Cart extends Application {
         // Setting the content of the dialog
         dialog.setContentText("Delivery or Take Away?");
         // Adding buttons to the dialog pane
+        
         dialog.getDialogPane().getButtonTypes().addAll(type, type2);
         dialog.showAndWait().ifPresent(response -> {
             if (response == type) {
@@ -318,13 +320,13 @@ public class Cart extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                // TODO Auto-generated method stub
+             
                 Filing f = new Filing();
                 f.deleteProductFile(productsFile);
                 try {
                     start(cartPage);
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
+                   
                     e.printStackTrace();
                 }
                 total = 0;
