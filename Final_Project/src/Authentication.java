@@ -22,10 +22,8 @@ public class Authentication {
 	public boolean searchByEmail(ArrayList<String> arrayList, String email) {
 		for (int i = 0; i < arrayList.size(); i++) {
 			String lineInfo = arrayList.get(i);
-			// System.out.println(lineInfo);
 			if (lineInfo != null) {
 				String[] columns = lineInfo.split(",");
-				// System.out.println((columns[columnMap.get("email")]));
 				if (columns[columnMap.get("email")].equals(email)) {
 					return true;
 				}
@@ -37,10 +35,10 @@ public class Authentication {
 	public boolean searchByEmailAndPassword(ArrayList<String> arrayList, String email, String password) {
 		for (int i = 0; i < arrayList.size(); i++) {
 			String lineInfo = arrayList.get(i);
-			// System.out.println(lineInfo);
+			
 			if (lineInfo != null) {
 				String[] columns = lineInfo.split(",");
-				// System.out.println((columns[columnMap.get("email")]));
+				
 				if (columns[columnMap.get("email")].equals(email)
 						&& columns[columnMap.get("password")].equals(password)) {
 					return true;
@@ -58,11 +56,11 @@ public class Authentication {
 		if (isEmailFound == true) {
 			Alert signUpError = new Alert(Alert.AlertType.ERROR);
 			signUpError.setContentText("Email already exist");
-			// System.out.println("Email already exist");
+			
 			signUpError.show();
 			return true;
 		} else {
-			// password match validation usersFileData,pass1,pass2
+			
 			if (userData.getPassword().equals(userData.getConfirmPassword())) {
 				filing.writeData(userData.toString(), usersFile);
 				Alert signUpSuccessful = new Alert(Alert.AlertType.INFORMATION);

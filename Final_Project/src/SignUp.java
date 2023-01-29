@@ -39,6 +39,15 @@ public class SignUp extends Application {
     DatePicker dobDatePicker;
     PasswordField passwordField, confirmPassField;
 
+    public boolean chkRadioBtn() {
+        if (maleRadioButton.isSelected()) {
+            return true;
+        } else if (femaleRadioButton.isSelected()) {
+            return true;
+        } else
+            return false;
+    }
+
     public User getUserDetails() {
         userData.setFirstName(firstnameField.getText());
         if (maleRadioButton.isSelected()) {
@@ -186,7 +195,7 @@ public class SignUp extends Application {
         signUpPane.add(cancelButton, 2, 8);
         signUpPane.setMargin(cancelButton, new Insets(0, 0, 0, 80));
 
-        signUpPane.setStyle("-fx-background-color: #FF6347;");
+        signUpPane.setStyle("-fx-background-color: #686BFF;");
 
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -208,18 +217,24 @@ public class SignUp extends Application {
             @Override
             public void handle(ActionEvent event) {
                 boolean confirm;
-                // Filing fileWrite = new Filing();
-                // System.out.println(fileWrite.readData("signup.txt"));
-                // fileWrite.writeData(getUserDetails(), "signup.txt");
-                Authentication auth = new Authentication();
-                confirm = auth.signUp(getUserDetails());
-                if (confirm == false) {
-                    HomePage home = new HomePage();
-                    try {
-                        home.start(signUpstage);
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+
+                if (firstnameField.getText().equals("") || emailField.getText().equals("")
+                        || dobDatePicker.getValue() == null || passwordField.getText().equals("")
+                        || confirmPassField.getText().equals("") || chkRadioBtn() == false) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Please fill all the fields");
+                    alert.show();
+                } else {
+                    Authentication auth = new Authentication();
+                    confirm = auth.signUp(getUserDetails());
+                    if (confirm == false) {
+                        HomePage home = new HomePage();
+                        try {
+                            home.start(signUpstage);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

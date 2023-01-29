@@ -106,11 +106,9 @@ public class Login extends Application {
         });
 
         Button signUpButton = new Button("Sign Up");
-        signUpButton.setTextFill(Color.ROYALBLUE);
+        signUpButton.setTextFill(Color.BLACK);
         signUpButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 14));
         signUpButton.setCursor(Cursor.HAND);
-        signUpButton.setOnMouseEntered(e -> signUpButton.setEffect(new DropShadow()));
-        signUpButton.setOnMouseExited(e -> signUpButton.setEffect(null));
         signUpButton.setStyle("-fx-background-color: transparent;-fx-underline: true;");
 
         Label askSignup = new Label("Don't have an account?");
@@ -129,8 +127,8 @@ public class Login extends Application {
         logGridPane.add(passwordField, 2, 2);
         logGridPane.add(showPass, 2, 3);
 
-        AnchorPane loginAnchorPane = new AnchorPane(logGridPane, LoginButton, askSignup, signUpButton);
-        loginAnchorPane.setStyle("-fx-background-color: #FF6347;");
+        AnchorPane loginAnchorPane = new AnchorPane(logGridPane, LoginButton, askSignup, signUpButton,imageView);
+        loginAnchorPane.setStyle("-fx-background-color: #686BFF;");
 
         AnchorPane.setLeftAnchor(loginAnchorPane, 0.0);
         AnchorPane.setRightAnchor(loginAnchorPane, 0.0);
@@ -143,23 +141,18 @@ public class Login extends Application {
         AnchorPane.setBottomAnchor(logGridPane, 0.0);
 
         AnchorPane.setLeftAnchor(imageView, 400.0);
-        // AnchorPane.setRightAnchor(imageView, 0.0);
         AnchorPane.setTopAnchor(imageView, 150.0);
         AnchorPane.setBottomAnchor(imageView, 0.0);
 
         AnchorPane.setLeftAnchor(LoginButton, 390.0);
         AnchorPane.setRightAnchor(LoginButton, 300.0);
-        // AnchorPane.setTopAnchor(LoginButton, 370.0);
         AnchorPane.setBottomAnchor(LoginButton, 200.0);
 
         AnchorPane.setLeftAnchor(askSignup, 340.0);
         AnchorPane.setTopAnchor(askSignup, 420.0);
 
         AnchorPane.setLeftAnchor(signUpButton, 495.0);
-        // AnchorPane.setRightAnchor(signUpButton, 245.0);
         AnchorPane.setTopAnchor(signUpButton, 415.0);
-        // AnchorPane.setBottomAnchor(signUpButton, 126.0);
-
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

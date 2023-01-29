@@ -44,7 +44,8 @@ public class HomePage extends Application {
 
         Text label = new Text("RESTO");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
-        label.setFill(Color.ORANGERED);
+        label.setFill(Color.web("#686BFF",1));
+
 
         // HOME IMAGE
         Image image = new Image("images/restaurant.jpg");
@@ -61,11 +62,11 @@ public class HomePage extends Application {
         // HOME BUTTON
         Image home = new Image("images/home.png");
         ImageView homeImage = new ImageView(home);
-        homeImage.setFitWidth(25);
+        homeImage.setFitWidth(40);
         homeImage.setPreserveRatio(true);
         Button homeButton = new Button();
-        homeButton.setText("HOME");
-        homeButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        homeButton.setText("Home");
+        homeButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         homeButton.setGraphic(homeImage);
         homeButton.setStyle("-fx-background-color: transparent;");
         homeButton.setTextFill(Color.WHITE);
@@ -74,25 +75,25 @@ public class HomePage extends Application {
         // Menu Button
         Image menuViewImage = new Image("images/menu.png");
         ImageView menuImage = new ImageView(menuViewImage);
-        menuImage.setFitWidth(25);
+        menuImage.setFitWidth(40);
         menuImage.setPreserveRatio(true);
         Button menuButton = new Button();
         menuButton.setGraphic(menuImage);
         menuButton.setStyle("-fx-background-color: transparent;");
-        menuButton.setText("MENU");
-        menuButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        menuButton.setText(" Menu");
+        menuButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         menuButton.setTextFill(Color.WHITE);
         menuButton.setCursor(Cursor.HAND);
 
         // Cart button
         Image cartViewImage = new Image("images/cart.png");
         ImageView cartImage = new ImageView(cartViewImage);
-        cartImage.setFitWidth(25);
+        cartImage.setFitWidth(40);
         cartImage.setPreserveRatio(true);
         Button cartButton = new Button();
         cartButton.setGraphic(cartImage);
-        cartButton.setText(" CART");
-        cartButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        cartButton.setText(" Cart");
+        cartButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         cartButton.setStyle("-fx-background-color: transparent;");
         cartButton.setTextFill(Color.WHITE);
         cartButton.setCursor(Cursor.HAND);
@@ -105,8 +106,8 @@ public class HomePage extends Application {
         tableView.setPreserveRatio(true);
         Button tableResButton = new Button();
         tableResButton.setGraphic(tableView);
-        tableResButton.setText("TABLE\nRESERVATION");
-        tableResButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 13));
+        tableResButton.setText("Reservation");
+        tableResButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 18));
         tableResButton.setStyle("-fx-background-color: transparent;");
         tableResButton.setCursor(Cursor.HAND);
         tableResButton.setTextFill(Color.WHITE);
@@ -115,18 +116,19 @@ public class HomePage extends Application {
         // LOGOUT BUTTON
         Image image2 = new Image("images/logout.png");
         ImageView imageView2 = new ImageView(image2);
-        imageView2.setFitWidth(25);
+        imageView2.setFitWidth(30);
         imageView2.setPreserveRatio(true);
         Button logOutButton = new Button();
-        logOutButton.setText(" LOGOUT");
+        logOutButton.setText("LOGOUT");
         logOutButton.setGraphic(imageView2);
         logOutButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
         logOutButton.setStyle("-fx-background-color: transparent;");
         logOutButton.setTextFill(Color.WHITE);
         logOutButton.setCursor(Cursor.HAND);
+        
         AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
-        leftPane.setStyle("-fx-background-color: #FF6347;");
+        leftPane.setStyle("-fx-background-color: #686BFF;");
         AnchorPane rightPane = new AnchorPane(label, imageView);
         AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
 
@@ -140,17 +142,15 @@ public class HomePage extends Application {
         AnchorPane.setLeftAnchor(separator, 200.0);
         AnchorPane.setRightAnchor(separator, 600.0);
 
-        AnchorPane.setTopAnchor(homeButton, 20.0);
+        AnchorPane.setTopAnchor(homeButton, 40.0);
         AnchorPane.setLeftAnchor(homeButton, 10.0);
         AnchorPane.setRightAnchor(homeButton, 30.0);
 
-        AnchorPane.setLeftAnchor(menuButton, 10.0);
-        AnchorPane.setRightAnchor(menuButton, 30.0);
-        AnchorPane.setTopAnchor(menuButton, 80.0);
+        AnchorPane.setLeftAnchor(menuButton, 20.0);
+        AnchorPane.setTopAnchor(menuButton, 100.0);
 
-        AnchorPane.setLeftAnchor(cartButton, 10.0);
-        AnchorPane.setRightAnchor(cartButton, 30.0);
-        AnchorPane.setTopAnchor(cartButton, 130.0);
+        AnchorPane.setLeftAnchor(cartButton, 20.0);
+        AnchorPane.setTopAnchor(cartButton, 160.0);
 
         AnchorPane.setLeftAnchor(logOutButton, 10.0);
         AnchorPane.setBottomAnchor(logOutButton, 35.0);
@@ -158,18 +158,16 @@ public class HomePage extends Application {
         AnchorPane.setTopAnchor(logOutButton, 540.0);
 
         AnchorPane.setLeftAnchor(tableResButton, 10.0);
-        AnchorPane.setRightAnchor(tableResButton, 30.0);
-        AnchorPane.setTopAnchor(tableResButton, 200.0);
-        // AnchorPane.setBottomAnchor(tableResButton, 30.0);
+        AnchorPane.setTopAnchor(tableResButton, 230.0);
+
+        AnchorPane.setLeftAnchor(label, 250.0);
+        AnchorPane.setTopAnchor(label, 40.0);
+        AnchorPane.setBottomAnchor(label, 400.0);
 
         AnchorPane.setLeftAnchor(imageView, 0.0);
         AnchorPane.setRightAnchor(imageView, 0.0);
         AnchorPane.setTopAnchor(imageView, 100.0);
         AnchorPane.setBottomAnchor(imageView, 400.0);
-
-        AnchorPane.setLeftAnchor(label, 250.0);
-        AnchorPane.setTopAnchor(label, 20.0);
-        AnchorPane.setBottomAnchor(label, 400.0);
 
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -179,23 +177,6 @@ public class HomePage extends Application {
 
                 try {
                     login.start(homePage);
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-        homeButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                HomePage home = new HomePage();
-
-                try {
-                    home.start(homePage);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -238,7 +219,40 @@ public class HomePage extends Application {
             }
 
         });
-        // naveen learning branch created
+
+        homeButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                HomePage home = new HomePage();
+
+                try {
+                    home.start(homePage);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+        tableResButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                TableReservation Table = new TableReservation();
+
+                try {
+                    Table.start(homePage);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+      
         homePageScene = new Scene(a1, 800, 600);
         homePage.setTitle("Home Page");
         homePage.setResizable(false);

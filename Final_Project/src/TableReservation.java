@@ -1,94 +1,49 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class Menu extends Application {
+public class TableReservation extends Application {
 
-    Stage menuPage;
-    Scene menuPagScene;
-    String productsFile = "Products.txt";
-    ObservableList<Products> itemsList;
-    TableView<Products> itemTable;
-    static ObservableList<String> cartItems;
-    String cartFile = "Cart.txt";
-
-    public void items() {
-        itemTable = new TableView<>();
-        // adding items to table view
-        TableColumn<Products, String> itemNameColumn = new TableColumn<>("Product Name");
-        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
-
-        TableColumn<Products, String> itemPriceColumn = new TableColumn<>("Product price");
-        itemPriceColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-
-        itemsList = FXCollections.observableArrayList();
-
-        try {
-            BufferedReader reader;
-            reader = new BufferedReader(new FileReader(productsFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                itemsList.add(new Products(parts[0], parts[1], 1));
-            }
-
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        itemTable.setItems(itemsList);
-        itemTable.getColumns().addAll(itemNameColumn, itemPriceColumn);
-    }
+    Stage TableReservation;
+    Scene TableReservationScene;
+    Filing fl;
+    String file = "Table Reservation.txt";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        menuPage = primaryStage;
+
+        TableReservation = primaryStage;
+
+        primaryStage.setTitle("Table Reservation");
 
         Separator separator = new Separator(Orientation.VERTICAL);
         separator.setMinHeight(600);
 
-        Text label = new Text("Menu");
+        Text label = new Text("TABLE RESERVATION");
         label.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
         label.setFill(Color.web("#686BFF", 1));
 
@@ -159,46 +114,88 @@ public class Menu extends Application {
         logOutButton.setTextFill(Color.WHITE);
         logOutButton.setCursor(Cursor.HAND);
 
-        // Add to cart button
-        Button addToCart = new Button("Add to Cart");
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
 
-        AnchorPane.setLeftAnchor(addToCart, 400.0);
-        AnchorPane.setRightAnchor(addToCart, 150.0);
-        AnchorPane.setBottomAnchor(addToCart, 50.0);
-        AnchorPane.setTopAnchor(addToCart, 490.0);
-        cartItems = FXCollections.observableArrayList();
-        addToCart.setOnAction(new EventHandler<ActionEvent>() {
+        Label nameLabel = new Label("Name:");
+        nameLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        nameLabel.setTextFill(Color.BLACK);
+        grid.add(nameLabel, 0, 1);
+
+        TextField nameField = new TextField();
+        nameField.setStyle("-fx-background-radius: 20;");
+        grid.add(nameField, 1, 1);
+
+        Label phoneLabel = new Label("Phone No:");
+        phoneLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        phoneLabel.setTextFill(Color.BLACK);
+        grid.add(phoneLabel, 0, 2);
+
+        TextField phoneField = new TextField();
+        phoneField.setStyle("-fx-background-radius: 20;");
+        grid.add(phoneField, 1, 2);
+
+        Label dateLabel = new Label("Date:");
+        dateLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        dateLabel.setTextFill(Color.BLACK);
+        grid.add(dateLabel, 0, 3);
+
+        DatePicker datePicker = new DatePicker();
+        grid.add(datePicker, 1, 3);
+
+        Label personLabel = new Label("Persons:");
+        personLabel.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        personLabel.setTextFill(Color.BLACK);
+        grid.add(personLabel, 0, 4);
+
+        ComboBox<String> personsBox = new ComboBox<>();
+        personsBox.setStyle("-fx-background-radius: 20;");
+        personsBox.setPromptText("Select Persons");
+        personsBox.setMaxWidth(250);
+        personsBox.getItems().addAll("1", "3", "5", "7", "9", "12");
+        grid.add(personsBox, 1, 4);
+
+        Button submitButton = new Button("Submit");
+        submitButton.setMaxWidth(200);
+        submitButton.setTextFill(Color.WHITE);
+        submitButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 14));
+        submitButton.setCursor(Cursor.HAND);
+        submitButton.setOnMouseEntered(e -> submitButton.setEffect(new DropShadow()));
+        submitButton.setOnMouseExited(e -> submitButton.setEffect(null));
+        submitButton.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
+        grid.add(submitButton, 1, 5);
+
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                Filing fl = new Filing();
-                String cart = itemTable.getSelectionModel().getSelectedItems().get(0).toString();
-                if (fl.isExists(cart, cartFile)) {
+                fl = new Filing();
+                if (nameField.getText().equals("") || phoneField.getText().equals("")
+                        || datePicker.getValue() == null || personsBox.getValue() == null) {
                     Alert alert = new Alert(AlertType.ERROR);
-                    alert.setContentText("Product already added");
+                    alert.setContentText("Please Fill All The Fields");
                     alert.show();
                 } else {
-                    fl.writeData(cart, cartFile);
+                    String res = nameField.getText() + "," + phoneField.getText() + "," + datePicker.getValue() + ","
+                            + personsBox.getValue();
+                    fl.writeData(res, file);
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setContentText("Your table has been reserved");
+                    alert.show();
                 }
 
             }
 
         });
 
-        // Adding Table of items
-        this.items();
-        itemTable.refresh();
-
         AnchorPane leftPane = new AnchorPane(homeButton, menuButton, cartButton, logOutButton,
                 tableResButton);
         leftPane.setStyle("-fx-background-color: #686BFF;");
-        AnchorPane rightPane = new AnchorPane(label, itemTable, addToCart);
+        AnchorPane rightPane = new AnchorPane(label, grid);
         AnchorPane a1 = new AnchorPane(leftPane, rightPane, separator);
-
-        AnchorPane.setLeftAnchor(itemTable, 0.0);
-        AnchorPane.setRightAnchor(itemTable, 0.0);
-        AnchorPane.setBottomAnchor(itemTable, 100.0);
-        AnchorPane.setTopAnchor(itemTable, 100.0);
 
         AnchorPane.setLeftAnchor(leftPane, 0.0);
         AnchorPane.setRightAnchor(leftPane, 600.0);
@@ -228,9 +225,15 @@ public class Menu extends Application {
         AnchorPane.setLeftAnchor(tableResButton, 10.0);
         AnchorPane.setTopAnchor(tableResButton, 230.0);
 
-        AnchorPane.setLeftAnchor(label, 250.0);
-        AnchorPane.setTopAnchor(label, 20.0);
+        AnchorPane.setLeftAnchor(label, 150.0);
+        AnchorPane.setTopAnchor(label, 40.0);
         AnchorPane.setBottomAnchor(label, 400.0);
+
+        AnchorPane.setLeftAnchor(grid, 10.0);
+        AnchorPane.setBottomAnchor(grid, 35.0);
+        AnchorPane.setRightAnchor(grid, 30.0);
+        AnchorPane.setTopAnchor(grid, 170.0);
+
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -238,7 +241,7 @@ public class Menu extends Application {
                 Login login = new Login();
 
                 try {
-                    login.start(menuPage);
+                    login.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -255,7 +258,7 @@ public class Menu extends Application {
                 Menu menu = new Menu();
 
                 try {
-                    menu.start(menuPage);
+                    menu.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -272,7 +275,7 @@ public class Menu extends Application {
                 Cart cart = new Cart();
 
                 try {
-                    cart.start(menuPage);
+                    cart.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -289,7 +292,7 @@ public class Menu extends Application {
                 HomePage home = new HomePage();
 
                 try {
-                    home.start(menuPage);
+                    home.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -305,7 +308,7 @@ public class Menu extends Application {
                 TableReservation Table = new TableReservation();
 
                 try {
-                    Table.start(menuPage);
+                    Table.start(TableReservation);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -315,10 +318,9 @@ public class Menu extends Application {
 
         });
 
-        menuPagScene = new Scene(a1, 800, 600);
-        menuPage.setTitle("Home Page");
-        menuPage.setResizable(false);
-        menuPage.setScene(menuPagScene);
-        menuPage.show();
+        TableReservationScene = new Scene(a1, 800, 600);
+        TableReservation.setScene(TableReservationScene);
+        TableReservation.setResizable(false);
+        TableReservation.show();
     }
 }
