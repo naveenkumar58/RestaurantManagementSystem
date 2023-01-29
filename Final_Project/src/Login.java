@@ -96,14 +96,6 @@ public class Login extends Application {
         LoginButton.setOnMouseEntered(e -> LoginButton.setEffect(new DropShadow()));
         LoginButton.setOnMouseExited(e -> LoginButton.setEffect(null));
         LoginButton.setStyle("-fx-background-radius: 20; -fx-background-color: BLUE;");
-        LoginButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                Authentication auth = new Authentication();
-                auth.signIn(emailField.getText(), passwordField.getText());
-            }
-        });
 
         Button signUpButton = new Button("Sign Up");
         signUpButton.setTextFill(Color.BLACK);
@@ -127,7 +119,7 @@ public class Login extends Application {
         logGridPane.add(passwordField, 2, 2);
         logGridPane.add(showPass, 2, 3);
 
-        AnchorPane loginAnchorPane = new AnchorPane(logGridPane, LoginButton, askSignup, signUpButton,imageView);
+        AnchorPane loginAnchorPane = new AnchorPane(logGridPane, LoginButton, askSignup, signUpButton, imageView);
         loginAnchorPane.setStyle("-fx-background-color: #686BFF;");
 
         AnchorPane.setLeftAnchor(loginAnchorPane, 0.0);
@@ -176,7 +168,15 @@ public class Login extends Application {
                 Boolean correctEmailPassword;
                 Authentication auth = new Authentication();
                 correctEmailPassword = auth.signIn(emailField.getText(), passwordField.getText());
-                if (correctEmailPassword == true) {
+                if (emailField.getText().equals("admin") && passwordField.getText().equals("admin")) {
+                    AdminPanel admin = new AdminPanel();
+                    try {
+                        admin.start(stage);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                } else if (correctEmailPassword == true) {
                     HomePage home = new HomePage();
                     try {
                         home.start(stage);

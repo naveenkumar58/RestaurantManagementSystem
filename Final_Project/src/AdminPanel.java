@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -91,10 +92,6 @@ public class AdminPanel extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     public Products addProductDetails() {
         ProductObj.setProductName(p_text.getText());
         ProductObj.setProductPrice(price_text.getText());
@@ -150,7 +147,6 @@ public class AdminPanel extends Application {
         update_btn.setOnMouseExited(e -> update_btn.setEffect(null));
 
         Button dlt_btn = new Button("Delete");
-
         dlt_btn.setPrefWidth(20);
         dlt_btn.setStyle("-fx-background-radius: 10px; -fx-background-color: RED;");
         dlt_btn.setFont(Font.font(null, FontWeight.BOLD, 14));
@@ -158,13 +154,46 @@ public class AdminPanel extends Application {
         // dlt_btn.setPrefWidth(80);
         dlt_btn.setOnMouseEntered(e -> dlt_btn.setEffect(new DropShadow()));
         dlt_btn.setOnMouseExited(e -> dlt_btn.setEffect(null));
+
+        Image image2 = new Image("images/logout.png");
+        ImageView imageView2 = new ImageView(image2);
+        imageView2.setFitWidth(30);
+        imageView2.setPreserveRatio(true);
+        Button logOutButton = new Button();
+        logOutButton.setText("LOGOUT");
+        logOutButton.setGraphic(imageView2);
+        logOutButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+        logOutButton.setStyle("-fx-background-color: transparent;");
+        logOutButton.setTextFill(Color.WHITE);
+        logOutButton.setCursor(Cursor.HAND);
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Login login = new Login();
+                try {
+                    login.start(adminStage);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+            }
+            
+        });
+
+        AnchorPane.setLeftAnchor(logOutButton, 10.0);
+        AnchorPane.setBottomAnchor(logOutButton, 40.0);
+        AnchorPane.setRightAnchor(logOutButton, 30.0);
+        AnchorPane.setTopAnchor(logOutButton, 530.0);
+        
         //
         addProducts();
 
         Separator sep2 = new Separator(Orientation.VERTICAL);
         sep2.setMinHeight(600);
 
-        AnchorPane left_pane = new AnchorPane(imageView, adminLabel);
+        AnchorPane left_pane = new AnchorPane(imageView, adminLabel,logOutButton);
         left_pane.setStyle("-fx-background-color: #686BFF;");
         AnchorPane right_pane = new AnchorPane(left_pane, p_name, p_text, p_price, price_text, add_btn, dlt_btn, sep2,
                 update_btn, menu_items);

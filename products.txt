@@ -1,2 +1,3 @@
-pasta,1000,null
+pasta,1500,null
 burger,500,null
+pizza,800,null

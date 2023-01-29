@@ -1,2 +1,4 @@
 naveen,Male,2023-01-02,naveen@,123
 love,Male,2023-01-01,love@,789
+Naveen,Male,2002-12-04,admin,admin
+asad,Male,2023-01-02,asad@,456
